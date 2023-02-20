@@ -63,7 +63,7 @@
             <div class="card-footer text-center">
                 <permission-button
                     :permission="'can_edit'"
-                    :to="{name:`EditContactMessage`,params:{id:$route.params.id}}"
+                    :to="{name:`Edit${route_prefix}`,params:{id:$route.params.id}}"
                     :classList="'btn btn-outline-info'">
                     <i class="fa text-info fa-pencil"></i> &nbsp;
                     Edit

@@ -18,20 +18,20 @@
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`Name`"
-                                        :name="`full_name`"
+                                        :name="`name`"
                                     />
                                 </div>
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`Url`"
-                                        :name="`category_url`"
+                                        :name="`url`"
                                     />
                                 </div>
 
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`Image`"
-                                        :name="`image`"
+                                        :name="`category_image`"
                                         :type="`file`"
                                         :preview="true"
                                     />

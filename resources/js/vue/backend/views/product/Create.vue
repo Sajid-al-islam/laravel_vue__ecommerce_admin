@@ -27,7 +27,17 @@
                                         :name="`default_price`"
                                     />
                                 </div>
+
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
+                                    <div>
+                                        <label class="mb-2 text-capitalize">
+                                            Select Cateogry
+                                        </label>
+                                        <CategoryManagementModal/>
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
                                     <label for="category_id">Category</label>
                                     <select name="category_id" id="category_id" class="form-control">
                                         <option value="">Computer</option>
@@ -35,8 +45,7 @@
                                         <option value="">Monitor</option>
                                         <option value="">Desktop component</option>
                                     </select>
-                                    <!-- <textarea class="form-control" id="message" name="message"></textarea> -->
-                                </div>
+                                </div> -->
 
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
@@ -116,7 +125,7 @@
                 </div>
             </form>
         </div>
-        <CategoryManagementModal/>
+        
     </div>
 </template>
 

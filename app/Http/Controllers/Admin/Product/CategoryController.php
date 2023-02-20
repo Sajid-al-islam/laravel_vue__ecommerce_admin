@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     public function all()
@@ -51,13 +53,11 @@ class CategoryController extends Controller
         return response()->json($data,200);
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $validator = Validator::make(request()->all(), [
-            'full_name' => ['required'],
-            'email' => ['required'],
-            'subject' => ['required'],
-            'message' => ['required'],
+            'name' => ['required'],
+            'url' => ['required', 'unique:categories', 'min:3'],
         ]);
 
         if ($validator->fails()) {
@@ -67,12 +67,19 @@ class CategoryController extends Controller
             ], 422);
         }
 
-        $data = new Category();
-        $data->full_name = request()->full_name;
-        $data->email = request()->email;
-        $data->subject = request()->subject;
-        $data->message = request()->message;
+        $data = Category::create($request->except('category_image'));
+        $data->creator = Auth::user()->id;
         $data->save();
+        $data->slug = $data->id . rand(1111, 9999) . Str::slug($request->name);
+        $data->save();
+
+        if ($request->hasFile('category_image')) {
+            $file = $request->file('category_image');
+            $path = Storage::put('/uploads/category_image', $file);
+            $data->category_image = $path;
+            $data->save();
+        }
+
 
         return response()->json($data, 200);
     }

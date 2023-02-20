@@ -106,6 +106,19 @@ Route::group(
                 Route::get('/{id}','Admin\Product\CategoryController@show');
             });
 
+            Route::group(['prefix' => 'brand'], function () {
+                Route::get('/all','Admin\Product\BrandController@all');
+                Route::post('/store','Admin\Product\BrandController@store');
+                Route::post('/canvas-store','Admin\Product\BrandController@canvas_store');
+                Route::post('/update','Admin\Product\BrandController@update');
+                Route::post('/canvas-update','Admin\Product\BrandController@canvas_update');
+                Route::post('/soft-delete','Admin\Product\BrandController@soft_delete');
+                Route::post('/destroy','Admin\Product\BrandController@destroy');
+                Route::post('/restore','Admin\Product\BrandController@restore');
+                Route::post('/bulk-import','Admin\Product\BrandController@bulk_import');
+                Route::get('/{id}','Admin\Product\BrandController@show');
+            });
+
         });
     }
 );
