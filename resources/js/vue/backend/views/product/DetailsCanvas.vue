@@ -16,17 +16,12 @@
                         <tr>
                             <td>Name</td>
                             <td>:</td>
-                            <td>{{ this[`get_${store_prefix}`].full_name }}</td>
+                            <td>{{ this[`get_${store_prefix}`].product_name }}</td>
                         </tr>
                         <tr>
-                            <td>Subject</td>
+                            <td>price</td>
                             <td>:</td>
-                            <td>{{ this[`get_${store_prefix}`].subject }}</td>
-                        </tr>
-                        <tr>
-                            <td>Message</td>
-                            <td>:</td>
-                            <td>{{ this[`get_${store_prefix}`].message }}</td>
+                            <td>{{ this[`get_${store_prefix}`].default_price }}</td>
                         </tr>
                         <tr>
                             <td>Status</td>

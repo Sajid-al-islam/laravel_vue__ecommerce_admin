@@ -22,19 +22,18 @@
                             </tr>
                             <tr>
                                 <td>Name</td>
-                                <td>{{ this[`get_${store_prefix}`].full_name }}</td>
+                                <td>{{ this[`get_${store_prefix}`].product_name }}</td>
                             </tr>
+                            
                             <tr>
-                                <td>Email</td>
-                                <td>{{ this[`get_${store_prefix}`].email }}</td>
-                            </tr>
-                            <tr>
-                                <td>Subject</td>
-                                <td>{{ this[`get_${store_prefix}`].subject }}</td>
+                                <td>price</td>
+                                <td>{{ this[`get_${store_prefix}`].default_price }}</td>
                             </tr>
                             <tr>
                                 <td>Description</td>
-                                <td>{{ this[`get_${store_prefix}`].description }}</td>
+                                <td>
+                                    <span v-html="this[`get_${store_prefix}`].description"></span>
+                                </td>
                             </tr>
                             <tr>
                                 <td>status </td>
@@ -64,7 +63,7 @@
             <div class="card-footer text-center">
                 <permission-button
                     :permission="'can_edit'"
-                    :to="{name:`EditContactMessage`,params:{id:$route.params.id}}"
+                    :to="{name:`Edit${route_prefix}`,params:{id: $route.params.id}}"
                     :classList="'btn btn-outline-info'">
                     <i class="fa text-info fa-pencil"></i> &nbsp;
                     Edit

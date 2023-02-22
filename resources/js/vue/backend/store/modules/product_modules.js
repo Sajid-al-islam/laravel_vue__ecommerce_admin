@@ -18,6 +18,16 @@ const getters = {
 const actions = {
     ...test_module.actions(),
 
+    [`fetch_${store_prefix}`]: async function ({ state, commit }, { id }) {
+        let url = `/${api_prefix}/${id}`;
+        await axios.get(url).then((res) => {
+            this.commit(`set_${store_prefix}`, res.data);
+            res.data.related_categories.forEach((i) => {
+                commit(`set_selected_categorys`, i);
+            })
+        });
+    },
+
     [`store_${store_prefix}`]: function({state, getters, commit}){
         const {form_values, form_inputs, form_data} = window.get_form_data(`.create_form`);
         // console.log(form_data, form_inputs, form_values);

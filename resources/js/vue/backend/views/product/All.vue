@@ -72,10 +72,8 @@
                         <tr>
                             <th><input @click="call_store(`set_select_all_${store_prefix}s`)" type="checkbox" class="form-check-input check_all"></th>
                             <table-th :sort="true" :tkey="'id'" :title="'ID'" :ariaLable="'id'"/>
-                            <table-th :sort="true" :tkey="'full_name'" :title="'Full Name'" />
-                            <table-th :sort="true" :tkey="'email'" :title="'Email'" />
-                            <table-th :sort="true" :tkey="'subject'" :title="'Subject'" />
-                            <table-th :sort="true" :tkey="'message'" :title="'Message'" />
+                            <table-th :sort="true" :tkey="'product_name'" :title="'Name'" />
+                            <table-th :sort="true" :tkey="'default_price'" :title="'Price'" />
                             <table-th :sort="true" :tkey="'status'" :title="'Status'" />
                             <th aria-label="actions">Actions</th>
                         </tr>
@@ -89,12 +87,10 @@
                             <td>{{ item.id }}</td>
                             <td>
                                 <span class="text-warning cursor_pointer" @click.prevent="call_store(`set_${store_prefix}`,item)">
-                                    {{ item.full_name }}
+                                    {{ item.product_name }}
                                 </span>
                             </td>
-                            <td>{{ item.email }}</td>
-                            <td>{{ item.subject }}</td>
-                            <td>{{ item.message }}</td>
+                            <td>{{ item.default_price }}</td>
                             <td>
                                 <span v-if="item.status == 1" class="badge bg-label-success me-1">active</span>
                                 <span v-if="item.status == 0" class="badge bg-label-success me-1">deactive</span>

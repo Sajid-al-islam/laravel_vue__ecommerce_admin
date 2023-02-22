@@ -28,21 +28,16 @@ class ProductController extends Controller
             $status = request()->status;
         }
 
-        $query = ContactMessage::where('status', $status)->orderBy($orderBy, $orderByType);
+        $query = Product::where('status', $status)->orderBy($orderBy, $orderByType);
 
         if (request()->has('search_key')) {
             $key = request()->search_key;
             $query->where(function ($q) use ($key) {
                 return $q->where('id', $key)
-                    ->orWhere('full_name', $key)
-                    ->orWhere('email', $key)
-                    ->orWhere('subject', $key)
-                    ->orWhere('full_name', 'LIKE', '%' . $key . '%')
-                    ->orWhere('email', 'LIKE', '%' . $key . '%')
-                    ->orWhere('subject', 'LIKE', '%' . $key . '%')
-                    ->orWhere('created_at', 'LIKE', '%' . $key . '%')
-                    ->orWhere('updated_at', 'LIKE', '%' . $key . '%')
-                    ->orWhere('status', 'LIKE', '%' . $key . '%');
+                    ->orWhere('product_name', $key)
+                    ->orWhere('default_price', $key)
+                    ->orWhere('product_name', 'LIKE', '%' . $key . '%')
+                    ->orWhere('default_price', 'LIKE', '%' . $key . '%');
             });
         }
 
@@ -52,7 +47,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $data = ContactMessage::where('id',$id)->first();
+        $data = Product::where('id',$id)->first();
         if(!$data){
             return response()->json([
                 'err_message' => 'not found',
