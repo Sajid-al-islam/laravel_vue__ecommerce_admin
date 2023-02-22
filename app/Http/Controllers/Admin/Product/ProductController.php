@@ -9,6 +9,8 @@ use App\Models\ProductImage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image as interImage;
 use Throwable;
@@ -62,14 +64,12 @@ class ProductController extends Controller
 
     public function store()
     {
-        dd(request()->all());
         $validator = Validator::make(request()->all(), [
             'product_name' => ['required'],
             'default_price' => ['required'],
             // 'brand_id' => ['required'],
             'selected_categories' => ['required'],
             'description' => ['required'],
-            'image' => ['file'],
             'search_keywords' => ['required'],
             'page_title' => ['required'],
             'product_url' => ['required', 'unique:products'],
@@ -82,38 +82,20 @@ class ProductController extends Controller
                 'errors' => $validator->errors(),
             ], 422);
         }
-
+        
         $product_info = request()->except([
             'selected_categories',
-            'image',
-            'bulk_pricing_discount_type',
-            'selected_variant_options',
-            'modifier_options',
-            'custom_fields',
-            'hs_codes',
-            'custom_field_name',
-            'custom_field_value',
-            'variant_values',
-            '_token',
-            'Variant_(Read-only)',
-            'purchasable',
-            'Default_Price',
-            'Stock',
-            'SKU',
-            'Sale_Price',
+            'image'
         ]);
 
-        $product_info['bulk_pricing_discount_type'] = request()->bulk_pricing_discount_type;
-        $product_info['selected_categories'] = request()->selected_categories;
-        $product_info['selected_variant_options'] = request()->selected_variant_options;
-        $product_info['modifier_options'] = request()->modifier_options;
-        $product_info['custom_fields'] = request()->custom_fields;
-        $product_info['hs_codes'] = request()->hs_codes;
-        $product_info['variant_values'] = json_encode(request()->variant_values);
+        // $product_info['modifier_options'] = $request->modifier_options;
+        // $product_info['custom_fields'] = $request->custom_fields;
+        // $product_info['hs_codes'] = $request->hs_codes;
 
         $related_iamges_id = [];
         if (request()->hasFile('image')) {
             foreach (request()->file('image') as $key => $image) {
+
                 try {
                     $path = $this->store_product_file($image);
                     $id = ProductImage::insertGetId([
@@ -125,25 +107,31 @@ class ProductController extends Controller
                     ]);
                     array_push($related_iamges_id, $id);
                 } catch (Throwable $e) {
-                    report($e);
+                    dump($e);
+                    // report($e);
                     return response()->json($e, 500);
                 }
             }
         }
 
         // dd($related_iamges_id);
-
+        
         if (count($related_iamges_id) > 0) {
             $product = Product::create($product_info);
-            $product->categories()->attach(json_decode(request()->selected_categories));
+            // dd(request()->selected_categories, $product);
+            $product->categories()->attach(request()->selected_categories);
 
+            
             for ($i = 0; $i < count($related_iamges_id); $i++) {
                 $related_iamge = ProductImage::find($related_iamges_id[$i]);
                 $related_iamge->product_id = $product->id;
                 $related_iamge->save();
             }
+
             $message = "product created!";
-            return response()->json($message, 200);
+            return response()->json([
+                'message' => $message
+            ], 200);
         } else {
             return response()->json('Upload valid jpg or jpeg image.', 500);
         }
@@ -154,10 +142,8 @@ class ProductController extends Controller
     {
         // $path = Storage::put('uploads/file_manager',$request->file('fm_file'));
         $file = $image;
-        // dd($file);
         $extension = $file->getClientOriginalExtension();
         $temp_name  = uniqid(10) . time();
-
         $image = interImage::make($file);
 
         // main image
@@ -179,7 +165,7 @@ class ProductController extends Controller
             $constraint->aspectRatio();
         });
         $canvas->insert($image);
-        $canvas->insert(interImage::make(public_path('ilogo.png')), 'bottom-right');
+        // $canvas->insert(interImage::make(public_path('ilogo.png')), 'bottom-right');
 
         $path = 'uploads/product/product_image_400x400_' . $temp_name . '.' . $extension;
         $canvas->save($path);

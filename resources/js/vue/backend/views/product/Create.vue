@@ -21,6 +21,14 @@
                                         :name="`product_name`"
                                     />
                                 </div>
+
+                                <div class="form-group d-grid align-content-start gap-1 mb-2 " >
+                                    <input-field
+                                        :label="`search keywords`"
+                                        :name="`search_keywords`"
+                                    />
+                                </div>
+                                
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`Default price`"
@@ -56,16 +64,12 @@
                                         :multiple="true"
                                         :preview="true"
                                     />
-                                    <!-- <label class="mb-2 text-capitalize">
-                                        Image
-                                    </label>
-                                    <input type="file" class="form-control" accept="image/*" name="image"> -->
                                 </div>
 
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`stock`"
-                                        :name="`stock`"
+                                        :name="`track_inventory_on_the_variant_level_stock`"
                                         :type="`number`"
                                     />
                                 </div>
@@ -73,17 +77,12 @@
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`low stock`"
-                                        :name="`low_stock`"
+                                        :name="`track_inventory_on_the_variant_level_low_stock`"
                                         :type="`number`"
                                     />
                                 </div>
 
-                                <div class="form-group d-grid align-content-start gap-1 mb-2 " >
-                                    <input-field
-                                        :label="`search keywords`"
-                                        :name="`search_keywords`"
-                                    />
-                                </div>
+                                
 
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <label for="description">Description</label>
