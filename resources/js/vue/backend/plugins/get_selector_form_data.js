@@ -13,11 +13,22 @@ window.get_form_data = function (selector) {
     let form_inputs = {};
     form_values.forEach((i) => {
         if(i.type === 'file'){
-            if(i.value.length){
-                for (let j = 0; j < i.value?.length; j++) {
-                    const el = i.value[j];
-                    form_data.append(i.name+'[]', el);
+            /**
+             * if there are multiple files do a loop
+             * 
+            */
+           if(i.multiple){
+               for (let j = 0; j < i.value?.length; j++) {
+                   const el = i.value[j];
+                   form_data.append(i.name+'[]', el);
                 }
+            }
+            /**
+             * else 
+             * append the single file
+             */
+            else{
+                form_data.append(i.name, i.value);
             }
         }else{
             form_data.append(i.name, i.value);
@@ -56,6 +67,7 @@ function get_el_value(el) {
                     }
                     break;
                 case "file":
+                    data.multiple = el.multiple;
                     data.value = el.multiple ? el.files : (el.files.length ? el.files[0] : '');
                     break;
             }

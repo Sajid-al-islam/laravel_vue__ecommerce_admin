@@ -10,7 +10,7 @@
                     </router-link>
                 </div>
             </div>
-            <form @submit.prevent="call_store(`store_${store_prefix}`,$event.target)" autocomplete="false">
+            <form @submit.prevent="call_store(`store_${store_prefix}`,$event.target)" autocomplete="false" class="create_form">
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-lg-10">
@@ -18,7 +18,7 @@
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`Name`"
-                                        :name="`full_name`"
+                                        :name="`product_name`"
                                     />
                                 </div>
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
@@ -49,11 +49,17 @@
 
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
-                                        :label="`Image`"
+                                        :label="`photo`"
                                         :name="`image`"
                                         :type="`file`"
+                                        :accept="`image/*`"
+                                        :multiple="true"
                                         :preview="true"
                                     />
+                                    <!-- <label class="mb-2 text-capitalize">
+                                        Image
+                                    </label>
+                                    <input type="file" class="form-control" accept="image/*" name="image"> -->
                                 </div>
 
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
@@ -74,8 +80,8 @@
 
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
-                                        :label="`search_keyword`"
-                                        :name="`search_keyword`"
+                                        :label="`search keywords`"
+                                        :name="`search_keywords`"
                                     />
                                 </div>
 
