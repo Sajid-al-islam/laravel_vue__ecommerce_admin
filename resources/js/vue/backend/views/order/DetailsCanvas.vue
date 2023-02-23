@@ -14,14 +14,19 @@
                             <td>{{ this[`get_${store_prefix}`].id }}</td>
                         </tr>
                         <tr>
-                            <td>Name</td>
+                            <td>Invoice no</td>
                             <td>:</td>
-                            <td>{{ this[`get_${store_prefix}`].product_name }}</td>
+                            <td>{{ this[`get_${store_prefix}`].invoice_id }}</td>
                         </tr>
                         <tr>
-                            <td>price</td>
+                            <td>Order Status</td>
                             <td>:</td>
-                            <td>{{ this[`get_${store_prefix}`].default_price }}</td>
+                            <td>{{ this[`get_${store_prefix}`].order_status }}</td>
+                        </tr>
+                        <tr>
+                            <td>Order Total</td>
+                            <td>:</td>
+                            <td>{{ this[`get_${store_prefix}`].total_price }}</td>
                         </tr>
                         <tr>
                             <td>Status</td>

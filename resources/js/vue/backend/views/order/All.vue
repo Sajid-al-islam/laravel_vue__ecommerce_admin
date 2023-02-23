@@ -22,13 +22,13 @@
                     </form>
                 </div>
                 <div class="btns d-flex gap-2 align-items-center">
-                    <permission-button
+                    <!-- <permission-button
                         :permission="'can_create'"
                         :to="{name: `Create${route_prefix}`}"
                         :classList="'btn rounded-pill btn-outline-info'">
                         <i class="fa fa-pencil me-5px"></i>
                         Create
-                    </permission-button>
+                    </permission-button> -->
                     <div class="table_actions">
                         <a href="#" @click.prevent="()=>''" class="btn px-1 btn-outline-secondary">
                             <i class="fa fa-list"></i>
@@ -72,9 +72,11 @@
                         <tr>
                             <th><input @click="call_store(`set_select_all_${store_prefix}s`)" type="checkbox" class="form-check-input check_all"></th>
                             <table-th :sort="true" :tkey="'id'" :title="'ID'" :ariaLable="'id'"/>
-                            <table-th :sort="true" :tkey="'product_name'" :title="'Name'" />
-                            <table-th :sort="true" :tkey="'default_price'" :title="'Price'" />
-                            <table-th :sort="true" :tkey="'status'" :title="'Status'" />
+                            <table-th :sort="true" :tkey="'invoice_id'" :title="'Invoice No'" />
+                            <table-th :sort="true" :tkey="'order_status'" :title="'Order Status'" />
+                            <table-th :sort="true" :tkey="'delivery_method'" :title="'Delivery method'" />
+                            <table-th :sort="true" :tkey="'total_price'" :title="'Price'" />
+                            <table-th :sort="true" :tkey="'invoice_date'" :title="'Order date'" />
                             <th aria-label="actions">Actions</th>
                         </tr>
                     </thead>
@@ -87,14 +89,18 @@
                             <td>{{ item.id }}</td>
                             <td>
                                 <span class="text-warning cursor_pointer" @click.prevent="call_store(`set_${store_prefix}`,item)">
-                                    {{ item.product_name }}
+                                    {{ item.invoice_id }}
                                 </span>
                             </td>
-                            <td>{{ item.default_price }}</td>
-                            <td>
+                            <td>{{ item.order_status }}</td>
+                            <td>{{ item.delivery_method }}</td>
+                            <td>{{ item.total_price }}</td>
+                            <td>{{ item.invoice_date }}</td>
+                            
+                            <!-- <td>
                                 <span v-if="item.status == 1" class="badge bg-label-success me-1">active</span>
                                 <span v-if="item.status == 0" class="badge bg-label-success me-1">deactive</span>
-                            </td>
+                            </td> -->
                             <td>
                                 <div class="table_actions">
                                     <a href="#" @click.prevent="()=>''" class="btn btn-sm btn-outline-secondary">

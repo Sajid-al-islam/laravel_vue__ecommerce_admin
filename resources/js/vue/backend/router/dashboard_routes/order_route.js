@@ -1,6 +1,5 @@
 import Layout from '../../views/order/Layout'
 import AllOrder from '../../views/order/All'
-import CreateOrder from '../../views/order/Create'
 import EditOrder from '../../views/order/Edit'
 import DetailsOrder from '../../views/order/Details'
 import ImportOrder from '../../views/order/Import'
@@ -22,11 +21,7 @@ export default {
             name: 'ImportOrder',
             component: ImportOrder,
         },
-        {
-            path: 'create',
-            name: 'CreateOrder',
-            component: CreateOrder,
-        },
+        
         {
             path: 'edit/:id',
             name: 'EditOrder',

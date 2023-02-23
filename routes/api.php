@@ -119,6 +119,17 @@ Route::group(
                 Route::get('/{id}','Admin\Product\BrandController@show');
             });
 
+            Route::group(['prefix' => 'order'], function () {
+                Route::get('/all','Admin\Order\OrderController@all');
+                Route::post('/update','Admin\Order\OrderController@update');
+                Route::post('/canvas-update','Admin\Order\OrderController@canvas_update');
+                Route::post('/soft-delete','Admin\Order\OrderController@soft_delete');
+                Route::post('/destroy','Admin\Order\OrderController@destroy');
+                Route::post('/restore','Admin\Order\OrderController@restore');
+                Route::post('/bulk-import','Admin\Order\OrderController@bulk_import');
+                Route::get('/{id}','Admin\Order\OrderController@show');
+            });
+
         });
     }
 );
