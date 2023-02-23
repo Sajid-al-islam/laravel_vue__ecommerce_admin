@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 import auth_modules from './modules/auth_modules';
 import product_modules from './modules/product_modules';
+import order_modules from './modules/order_modules';
 import category_modules from './modules/category_modules';
 import brand_modules from './modules/brand_modules';
 import user_modules from './modules/user_modules';
@@ -18,6 +19,7 @@ const store = new Vuex.Store({
         user_role_modules,
         user_contact_message_modules,
         product_modules,
+        order_modules,
         category_modules,
         brand_modules,
     },

@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image as interImage;
 use Throwable;
 
+use function PHPSTORM_META\type;
+
 class ProductController extends Controller
 {
     public function all()
@@ -83,7 +85,7 @@ class ProductController extends Controller
             'image'
         ]);
 
-        // $product_info['modifier_options'] = $request->modifier_options;
+        $product_info['selected_categories'] = json_encode(request()->selected_categories);
         // $product_info['custom_fields'] = $request->custom_fields;
         // $product_info['hs_codes'] = $request->hs_codes;
 
@@ -196,40 +198,60 @@ class ProductController extends Controller
 
     public function update()
     {
-        $data = ContactMessage::find(request()->id);
-        if(!$data){
-            return response()->json([
-                'err_message' => 'validation error',
-                'errors' => ['name'=>['user_role not found by given id '.(request()->id?request()->id:'null')]],
-            ], 422);
-        }
 
-        $validator = Validator::make(request()->all(), [
-            'full_name' => ['required'],
-            'email' => ['required'],
-            'subject' => ['required'],
-            'message' => ['required'],
+        $product_info = request()->except([
+            'selected_categories',
+            'image'
         ]);
+        $product_info['selected_categories'] = json_encode(request()->selected_categories);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'err_message' => 'validation error',
-                'errors' => $validator->errors(),
-            ], 422);
+        $product = Product::find(request()->id);
+        $product->fill($product_info);
+
+        if (request()->hasFile('image')) {
+            // dd($request->file('upload_image'));
+            // 
+            foreach ($product->related_image()->get() as $single_imge) {
+                // dump(public_path($single_imge->image), $single_imge);
+                if (file_exists(public_path($single_imge->image))) {
+                    unlink(public_path($single_imge->image));
+                }
+            }
+            ProductImage::where('product_id', $product->id)->delete();
+            foreach (request()->file('image') as $key => $image) {
+                
+                try {
+                    $path = $this->store_product_file($image);
+                    ProductImage::insert([
+                        'product_id' => $product->id,
+                        'image' => $path,
+                        'creator' => Auth::user()->id,
+                        'created_at' => Carbon::now()->toDateTimeString(),
+                    ]);
+                    
+                } catch (Throwable $e) {
+                    report($e);
+                    
+                    return response()->json($e, 500);
+                }
+            }
         }
 
-        $data->full_name = request()->full_name;
-        $data->email = request()->email;
-        $data->subject = request()->subject;
-        $data->message = request()->message;
-        $data->save();
+        $product->save();
+        $product->categories()->sync(request()->selected_categories);
 
-        return response()->json($data, 200);
+        // dd($product);
+
+        // $path = '';
+        $message = "product updated!";
+        return response()->json([
+            'message' => $message
+        ], 200);
     }
 
     public function canvas_update()
     {
-        $data = ContactMessage::find(request()->id);
+        $data = Product::find(request()->id);
         if(!$data){
             return response()->json([
                 'err_message' => 'validation error',
@@ -263,7 +285,7 @@ class ProductController extends Controller
     public function soft_delete()
     {
         $validator = Validator::make(request()->all(), [
-            'id' => ['required','exists:contact_messages,id'],
+            'id' => ['required','exists:products,id'],
         ]);
 
         if ($validator->fails()) {
@@ -273,7 +295,7 @@ class ProductController extends Controller
             ], 422);
         }
 
-        $data = ContactMessage::find(request()->id);
+        $data = Product::find(request()->id);
         $data->status = 0;
         $data->save();
 
@@ -289,7 +311,7 @@ class ProductController extends Controller
     public function restore()
     {
         $validator = Validator::make(request()->all(), [
-            'id' => ['required','exists:contact_messages,id'],
+            'id' => ['required','exists:products,id'],
         ]);
 
         if ($validator->fails()) {
@@ -299,7 +321,7 @@ class ProductController extends Controller
             ], 422);
         }
 
-        $data = ContactMessage::find(request()->id);
+        $data = Product::find(request()->id);
         $data->status = 1;
         $data->save();
 
@@ -325,10 +347,10 @@ class ProductController extends Controller
             $item['created_at'] = $item['created_at'] ? Carbon::parse($item['created_at']): Carbon::now()->toDateTimeString();
             $item['updated_at'] = $item['updated_at'] ? Carbon::parse($item['updated_at']): Carbon::now()->toDateTimeString();
             $item = (object) $item;
-            $check = ContactMessage::where('id',$item->id)->first();
+            $check = Product::where('id',$item->id)->first();
             if(!$check){
                 try {
-                    ContactMessage::create((array) $item);
+                    Product::create((array) $item);
                 } catch (\Throwable $th) {
                     return response()->json([
                         'err_message' => 'validation error',

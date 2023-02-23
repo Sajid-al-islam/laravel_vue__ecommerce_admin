@@ -12,7 +12,7 @@
                     </a>
                 </div>
             </div>
-            <form @submit.prevent="call_store(`update_${store_prefix}`,$event.target)" autocomplete="false">
+            <form @submit.prevent="call_store(`update_${store_prefix}`,$event.target)" autocomplete="false" class="update_form">
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-lg-10">
@@ -76,9 +76,7 @@
                                         :type="`number`"
                                     />
                                 </div>
-
                                 
-
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <label for="description">Description</label>
                                     <textarea class="form-control" id="description" name="description">
@@ -124,7 +122,7 @@
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-outline-info" >
                         <i class="fa fa-upload"></i>
-                        Submit
+                        update
                     </button>
                 </div>
             </form>

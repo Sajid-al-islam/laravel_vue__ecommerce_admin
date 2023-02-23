@@ -30,7 +30,11 @@
             <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-box`" :text="`Product Management`" :alert_count="0">
                 <left-nav-list-item :to="'CreateProduct'" :text="'Create product'" />
                 <left-nav-list-item :to="'AllProduct'" :text="'Product Lists'" />
-                <left-nav-list-item :to="'AllProduct'" :text="'Product categories'" />
+                <!-- <left-nav-list-item :to="'AllProduct'" :text="'Product categories'" /> -->
+            </left-nav-list-group>
+
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-shopping-cart`" :text="`Order Management`" :alert_count="0">
+                <left-nav-list-item :to="'AllOrder'" :text="'Order Lists'" />
             </left-nav-list-group>
 
             <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-box`" :text="`Category Management`" :alert_count="0">
