@@ -6,6 +6,7 @@ const {store_prefix, api_prefix, route_prefix} = test_module;
 // state list
 const state = {
     ...test_module.states(),
+
 };
 
 // get state
@@ -24,19 +25,18 @@ const actions = {
             this.commit(`set_${store_prefix}`, res.data);
 
             var img_string="";
-            for (let index = 0; index < res.data.related_images.length; index++) {
-                let el = res.data.related_images[index];
-                img_string +=`<img src="/${el.image}"/>`
+            if(res.data.related_images) {
+                for (let index = 0; index < res.data.related_images.length; index++) {
+                    let el = res.data.related_images[index];
+                    img_string +=`<img src="/${el.image}"/>`
+                }
+                setTimeout(() => {
+                    
+                    document.querySelector('.file_preview')&&
+                    (document.querySelector('.file_preview').innerHTML = img_string)
+                }, 1000);
             }
-            setTimeout(() => {
-                
-                document.querySelector('.file_preview')&&
-                (document.querySelector('.file_preview').innerHTML = img_string)
-            }, 1000);
-            console.log(img_string); 
-            res.data.related_categories.forEach((i) => {
-                commit(`set_selected_categorys`, i);
-            })
+            
         });
     },
 
@@ -76,10 +76,28 @@ const actions = {
             window.s_alert("data updated");
         });
     },
+
+    [`set_${store_prefix}_status_update`]: function ({ state, getters, commit }, event) {
+        const {form_values, form_inputs, form_data} = window.get_form_data(`.status_change_form`);
+        
+        form_data.append("id", state[store_prefix].id);
+
+        axios.post(`/${api_prefix}/status_update`, form_data).then((res) => {
+            console.log("login store data", state[store_prefix].id);
+            let order_id = state[store_prefix].id;
+            this.dispatch(`fetch_${store_prefix}`, { id: order_id });
+            window.s_alert("data updated");
+        });
+    },
+
+    [`print_${store_prefix}_details`]: function ({ state, getters, commit }, event) {
+        window.print();
+    },
+
+
 }
 
 // mutators
-console.log(test_module.mutations());
 const mutations = {
     ...test_module.mutations(),
 

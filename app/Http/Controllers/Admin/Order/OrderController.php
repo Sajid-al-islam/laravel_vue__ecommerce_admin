@@ -40,7 +40,9 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $data = Order::where('id',$id)->with(['order_address', 'order_details', 'order_payments'])->first();
+        $data = Order::where('id',$id)->with(['order_address', 'order_payments','order_details' => function($q) {
+            $q->with('product');
+        }])->first();
         if(!$data){
             return response()->json([
                 'err_message' => 'not found',
@@ -176,6 +178,21 @@ class OrderController extends Controller
     {
     }
 
+    public function status_update()
+    {
+        $data = Order::find(request()->id);
+        if(!$data){
+            return response()->json([
+                'err_message' => 'validation error',
+                'errors' => ['name'=>['order not found by given id '.(request()->id?request()->id:'null')]],
+            ], 422);
+        }
+
+        $data->order_status = request()->order_status;
+        $data->save();
+
+        return response()->json($data, 200);
+    }
     public function restore()
     {
         $validator = Validator::make(request()->all(), [

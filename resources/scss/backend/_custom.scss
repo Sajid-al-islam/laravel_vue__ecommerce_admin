@@ -393,3 +393,75 @@
 .swal2-container{
     z-index: 99999;
 }
+
+@media print {
+    #print_section {
+        position: fixed;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        z-index: 9999;
+        box-shadow: none;
+        padding: 20px;
+        margin-top: 40px;
+    }
+    .upload_demo_form {
+        display: none !important;
+    }
+    .dark-layout {
+        background-color: transparent !important;
+    }
+    .no_print {
+        display: none !important;
+    }
+    h3 {
+        display: none !important;
+    }
+    .content.app-content {
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+    .container {
+        margin: 0px !important;
+        padding: 0px !important;
+    }
+    .dark-layout .table.table-striped tbody tr:nth-of-type(odd) {
+        --bs-table-accent-bg: transparent !important;
+    }
+    .dark-layout .table.table-striped tbody tr:nth-of-type(even) {
+        --bs-table-accent-bg: transparent !important;
+    }
+    .main-menu {
+        display: none !important;
+    }
+    nav {
+        display: none !important;
+    }
+    .watch {
+        display: none !important;
+    }
+    .quote_img {
+        display: none !important;
+    }
+    .signature_div {
+        display: flex !important;
+    }
+    .price_change_history {
+        display: none !important;
+    }
+    .spec {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .divider {
+        margin: 0px !important;
+    }
+    .card-body {
+        padding-top: 10px !important;
+    }
+    .signature_single_form {
+        margin-top: 30px !important;
+    }
+}

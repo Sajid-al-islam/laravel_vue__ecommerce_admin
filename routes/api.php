@@ -127,6 +127,7 @@ Route::group(
                 Route::post('/destroy','Admin\Order\OrderController@destroy');
                 Route::post('/restore','Admin\Order\OrderController@restore');
                 Route::post('/bulk-import','Admin\Order\OrderController@bulk_import');
+                Route::post('/status_update','Admin\Order\OrderController@status_update');
                 Route::get('/{id}','Admin\Order\OrderController@show');
             });
 
