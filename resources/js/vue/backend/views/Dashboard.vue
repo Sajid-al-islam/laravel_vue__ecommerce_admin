@@ -15,7 +15,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-primary me-3 p-2"><i class="fa-solid fa-chart-pie"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">230k</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.total_sales }}</h5>
                                         <small>Sales</small>
                                     </div>
                                 </div>
@@ -24,7 +24,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-info me-3 p-2"><i class="fa-solid fa-user-group"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">8.549k</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.total_customer }}</h5>
                                         <small>Customers</small>
                                     </div>
                                 </div>
@@ -33,7 +33,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-danger me-3 p-2"><i class="fa-solid fa-cart-shopping"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">1.423k</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.total_product }}</h5>
                                         <small>Products</small>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-primary me-3 p-2"><i class="fa-solid fa-shop-lock"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">230k</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.total_pending_order }}</h5>
                                         <small>Pending Orders</small>
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-info me-3 p-2"><i class="fa-solid fa-list"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">8.549k</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.total_categories }}</h5>
                                         <small>Total Categories</small>
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-danger me-3 p-2"><i class="fa-solid fa-shop"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">1.423k</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.total_sales_this_month }}</h5>
                                         <small>Total sales for this month</small>
                                     </div>
                                 </div>
@@ -80,7 +80,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-success me-3 p-2"><i class="fa-solid fa-money-bills"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">$9745</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.total_sales_today }}</h5>
                                         <small>Total sales for today</small>
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@
 <script>
 import { Bar, Line as LineChart } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale,LineElement, LinearScale, PointElement } from 'chart.js'
-
+import { mapActions, mapGetters, mapMutations } from "vuex";
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LineElement, LinearScale, PointElement)
 
 export default {
@@ -202,7 +202,18 @@ export default {
         responsive: true
       },
     }
-  }
+  },
+  methods: {
+        ...mapActions(['fetch_dashboard_stats']),
+    },
+    
+    created: async function() {
+        await this.fetch_dashboard_stats();
+    },
+
+    computed: {
+        ...mapGetters(['get_dashboard_stat']),
+    }
 }
 </script>
 

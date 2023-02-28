@@ -36,11 +36,12 @@
                         <div class="row mb-4">
                             <div class="col-sm-6">
                                 <h5 class="mb-3">From:</h5>
-                                <h3 class="text-dark mb-1">Ctg Computer ltd</h3>
-                                <div>Computer City Centre (Multiplan), Level: 4, Shop: 407-409</div>
-                                <div>69-71 New Elephant Road, Dhaka, Bangladesh</div>
-                                <div>Email: ctgcomputercentre2008@gmail.com</div>
-                                <div>Phone: 01733-080350</div>
+                                <h3 class="text-dark mb-1">{{ get_company_info.company_name }}</h3>
+                                <div>{{ get_company_info.address[0].building }}, </div>
+                                <div>{{ get_company_info.address[0].shop }}, </div>
+                                <div>{{ get_company_info.address[0].area }}, {{ get_company_info.address[0].division }}</div>
+                                <div>Email: {{ get_company_info.email }}</div>
+                                <div>Phone: {{ get_company_info.mobile_no[0] }}</div>
                             </div>
                             <div class="col-sm-6" v-if="this[`get_${store_prefix}`]">
                                 <h5 class="mb-3">To:</h5>
@@ -181,7 +182,12 @@ export default {
         },
     },
     computed: {
-        ...mapGetters([`get_${store_prefix}`])
+        ...mapGetters(
+            [
+                `get_${store_prefix}`,
+                'get_company_info'
+            ]
+        )
     }
 }
 </script>

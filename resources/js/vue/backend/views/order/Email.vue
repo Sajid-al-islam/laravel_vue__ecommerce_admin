@@ -66,7 +66,7 @@ export default {
     computed: {
         // mapping the getters
         ...mapGetters([
-            'get_email_data'
+            'get_email_data',
         ]),
 
     },

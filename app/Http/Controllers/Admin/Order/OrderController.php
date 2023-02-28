@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin\Order;
 
 use App\Http\Controllers\Controller;
 use App\Mail\InvoiceMail;
+use App\Models\Category;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -196,6 +199,35 @@ class OrderController extends Controller
         return response()->json($data, 200);
     }
 
+    public function dashboard_info()
+    {
+        $total_sales = Order::where('order_status', 'Accepted')->sum('total_price');
+
+        
+        $total_sales_this_month = Order::where('order_status', 'Accepted')
+        ->whereMonth('created_at', Carbon::now()->month)->sum('total_price');
+
+        $total_sales_today = Order::where('order_status', 'Accepted')
+        ->whereMonth('created_at', Carbon::today())->sum('total_price');
+
+
+        $total_customer = User::with(['roles' => function($q) {
+            $q->where('role_id', 3);
+        }])->count();
+        $total_pending_order = Order::where('order_status', 'Pending')->count();
+        $total_product = Product::count();
+        $total_categories = Category::count();
+        $data = [
+            "total_sales" => $total_sales,
+            "total_sales_this_month" => $total_sales_this_month,
+            "total_sales_today" => $total_sales_today,
+            "total_customer" => $total_customer,
+            "total_pending_order" => $total_pending_order,
+            "total_product" => $total_product,
+            "total_categories" => $total_categories,
+        ];
+        return response()->json($data, 200);
+    }
 
     public function send_email()
     {

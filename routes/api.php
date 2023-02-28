@@ -129,7 +129,12 @@ Route::group(
                 Route::post('/bulk-import','Admin\Order\OrderController@bulk_import');
                 Route::post('/status_update','Admin\Order\OrderController@status_update');
                 Route::post('/send_emails','Admin\Order\OrderController@send_email');
+                Route::post('/dashboard_info','Admin\Order\OrderController@dashboard_info');
                 Route::get('/{id}','Admin\Order\OrderController@show');
+            });
+
+            Route::group(['prefix' => 'dashboard'], function () {
+                Route::get('/dashboard_info','Admin\Order\OrderController@dashboard_info');
             });
 
         });
