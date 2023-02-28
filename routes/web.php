@@ -29,11 +29,14 @@ Route::group(['prefix' => '', 'namespace' => "Livewire"], function () {
 
 Route::group( ['prefix'=>'','namespace' => "Controllers" ],function(){
     Route::get('/website','WebsiteController@website');
+    Route::get('/invoice/{invoice}', 'WebsiteController@invoice_download')->name('invoice');
 });
 
 Route::get('/admin', function () {
     return view('backend.dashboard');
 })->name('admin');
+
+
 
 Route::get('/test', function () {
     // return view('test');

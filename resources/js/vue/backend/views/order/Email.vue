@@ -11,12 +11,17 @@
                         <label for="email_invoice mb-2">Add emails</label>
                         <div class="admin_form form_1" v-for="(email_data, index) in get_email_data" :key="index">
                             <div class="form-group d-grid align-content-start gap-1 mb-2">
-                                <div class="d-flex align-items-end">
+                                <div class="d-flex align-items-center">
                                     <input type="text" class="form-control invoice_email" v-model="email_data.email" id="email_invoice">
+                                    <input type="hidden" :value="order_id" name="order_id">
                                     <div class="justify-content-between">
                                         <div class="d-flex"> 
-                                            <button class="btn btn-success justify-content-between add_btn_email" @click.prevent="add_email_for_invoice(index)">+</button>
-                                            <button class="btn btn-danger justify-content-between remove_btn_email" @click.prevent="remove_email_for_invoice(index)">-</button>
+                                            <button class="btn btn-sm btn-outline-primary justify-content-between add_btn_email" @click.prevent="add_email_for_invoice(index)">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </button>
+                                            <button v-if="get_email_data.length > 1" class="btn btn-sm btn-outline-danger justify-content-between remove_btn_email" @click.prevent="remove_email_for_invoice(index)">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -42,7 +47,7 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
     data() {
         return {
-                      
+            order_id: null
         }
     },
     methods: {
@@ -55,7 +60,8 @@ export default {
         
     },
     created: async function()  {
-
+        this.order_id = this.$route.params.id;
+        console.log(this.order_id);
     },
     computed: {
         // mapping the getters

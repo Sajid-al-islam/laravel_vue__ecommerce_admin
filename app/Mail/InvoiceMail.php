@@ -16,9 +16,11 @@ class InvoiceMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+
+    public $order_details;
+    public function __construct($order_details)
     {
-        //
+        $this->order_details = $order_details;
     }
 
     /**
@@ -28,6 +30,7 @@ class InvoiceMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->markdown('mail.invoice-mail')
+                    ->subject('Order details');
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin\Order;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InvoiceMail;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -197,7 +199,18 @@ class OrderController extends Controller
 
     public function send_email()
     {
-        dd(request()->all());
+        $order_id = request()->order_id;
+        $order_details = Order::where('id',$order_id)->with(['order_address', 'order_payments','order_details' => function($q) {
+            $q->with('product');
+        }])->first();
+        $emails = json_decode(request()->emails);
+        foreach ($emails as $key => $value) {
+            Mail::to($value)->send(new InvoiceMail($order_details));
+        }
+
+        $data = "Mail sent successfully";
+
+        return response()->json($data, 200);
     }
 
 
