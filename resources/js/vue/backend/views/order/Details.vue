@@ -4,7 +4,7 @@
             <div class="card-header no_print">
                 <h4>Details</h4>
                 <div class="btns">
-                    <a href="" @click.prevent="call_store(`print_${store_prefix}_details`, null)"  class="btn rounded-pill btn-outline-success me-2">
+                    <a href="" @click.prevent="$router.push({ name: 'EmailOrder', params:{id: $route.params.id} })"  class="btn rounded-pill btn-outline-success me-2">
                         
                         <i class="fa fa-envelope me-5px"></i>
                         <span >
@@ -169,13 +169,14 @@ export default {
         ...mapActions([
             `fetch_${store_prefix}`,
             `set_${store_prefix}_status_update`,
-            `print_${store_prefix}_details`
+            `print_${store_prefix}_details`,
+            `email_${store_prefix}_invoice`
         ]),
         ...mapMutations([
             `set_${store_prefix}`
         ]),
         call_store: function(name, params=null){
-            // import before using call store() function
+            // import action before using call store() function
             this[name](params)
         },
     },

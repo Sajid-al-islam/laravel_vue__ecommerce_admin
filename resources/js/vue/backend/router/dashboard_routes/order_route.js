@@ -3,6 +3,7 @@ import AllOrder from '../../views/order/All'
 import EditOrder from '../../views/order/Edit'
 import DetailsOrder from '../../views/order/Details'
 import ImportOrder from '../../views/order/Import'
+import EmailOrder from '../../views/order/Email'
 
 export default {
     path: 'order',
@@ -31,6 +32,11 @@ export default {
             path: 'details/:id',
             name: 'DetailsOrder',
             component: DetailsOrder,
+        },
+        {
+            path: 'email_order_invoice/:id',
+            name: 'EmailOrder',
+            component: EmailOrder,
         },
     ],
 

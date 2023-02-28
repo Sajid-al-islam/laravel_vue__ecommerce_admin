@@ -11,6 +11,7 @@ import brand_modules from './modules/brand_modules';
 import user_modules from './modules/user_modules';
 import user_role_modules from './modules/user_role_modules';
 import user_contact_message_modules from './modules/user_contact_message_modules';
+import email_invoice_module from './modules/email_invoice_module';
 
 const store = new Vuex.Store({
     modules: {
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
         order_modules,
         category_modules,
         brand_modules,
+        email_invoice_module
     },
     state: {},
     getters: {},

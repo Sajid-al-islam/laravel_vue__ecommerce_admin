@@ -94,6 +94,10 @@ const actions = {
         window.print();
     },
 
+    [`email_${store_prefix}_invoice`]: function ({ state, getters, commit }, event) {
+        
+    },
+
 
 }
 

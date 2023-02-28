@@ -193,6 +193,14 @@ class OrderController extends Controller
 
         return response()->json($data, 200);
     }
+
+
+    public function send_email()
+    {
+        dd(request()->all());
+    }
+
+
     public function restore()
     {
         $validator = Validator::make(request()->all(), [
