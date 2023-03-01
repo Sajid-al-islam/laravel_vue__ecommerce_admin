@@ -17,8 +17,23 @@
                             <div class="admin_form form_1">
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
-                                        :label="`Brand name`"
+                                        :label="`Customer name`"
                                         :name="`name`"
+                                    />
+
+                                    <input-field
+                                        :label="`Customer Email`"
+                                        :name="`email`"
+                                    />
+
+                                    <input-field
+                                        :label="`Customer Address`"
+                                        :name="`address`"
+                                    />
+
+                                    <input-field
+                                        :label="`Mobile Number`"
+                                        :name="`mobile_number`"
                                     />
                                 </div>
                                 

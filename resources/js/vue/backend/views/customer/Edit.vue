@@ -19,9 +19,32 @@
                             <div class="admin_form form_1" v-if="this[`get_${store_prefix}`]">
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
-                                        :label="`Name`"
+                                        :label="`Customer Name`"
                                         :name="`name`"
                                         :value="this[`get_${store_prefix}`]['name']"
+                                    />
+                                </div>
+                                <div class="form-group d-aligh align-content-start gap-1 mb-2">
+                                    <input-field
+                                        :label="`Customer Address`"
+                                        :name="`address`"
+                                        :value="this[`get_${store_prefix}`]['address']"
+                                    />
+                                </div>
+
+                                <div class="form-group d-aligh align-content-start gap-1 mb-2">
+                                    <input-field
+                                        :label="`Customer Email`"
+                                        :name="`email`"
+                                        :value="this[`get_${store_prefix}`]['email']"
+                                    />
+                                </div>
+
+                                <div class="form-group d-aligh align-content-start gap-1 mb-2">
+                                    <input-field
+                                        :label="`Customer Mobile number`"
+                                        :name="`mobile_number`"
+                                        :value="this[`get_${store_prefix}`]['mobile_number']"
                                     />
                                 </div>
                             </div>

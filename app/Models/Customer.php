@@ -12,6 +12,11 @@ class Customer extends Model
     use HasFactory;
     protected $type = 'create';
 
+    public function findById($id)
+    {
+        return $this->find($id);
+    }
+
     public function type($type="create")
     {
         $this->type = $type;
@@ -41,7 +46,7 @@ class Customer extends Model
         $this->creator = Auth::user()->id;
         $this->save();
         $this->slug = $this->id.rand(10000,99999);
-        
+
         return $this->save();
     }
 }

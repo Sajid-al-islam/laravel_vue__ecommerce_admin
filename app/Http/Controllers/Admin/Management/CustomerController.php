@@ -11,18 +11,25 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
+    public $data;
+
+    public function __construct()
+    {
+        $this->data = new Customer();
+    }
     public function all()
     {
         $paginate = (int) request()->paginate;
-        $CustomerBy = request()->CustomerBy;
-        $CustomerByType = request()->CustomerByType;
+        $orderBy = request()->orderBy;
+        $orderByType = request()->orderByType;
 
         $status = 1;
         if (request()->has('status')) {
             $status = request()->status;
         }
 
-        $query = Customer::where('status', $status)->CustomerBy($CustomerBy, $CustomerByType);
+
+        $query = Customer::where('status', $status)->orderBy($orderBy, $orderByType);
 
         if (request()->has('search_key')) {
             $key = request()->search_key;
@@ -42,14 +49,14 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $data = Customer::where('id',$id)->first();
-        if(!$data){
+        $data = Customer::where('id', $id)->first();
+        if (!$data) {
             return response()->json([
                 'err_message' => 'not found',
-                'errors' => ['role'=>['data not found']],
+                'errors' => ['role' => ['data not found']],
             ], 422);
         }
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
 
     public function store(Request $request)
@@ -65,13 +72,11 @@ class CustomerController extends Controller
             ], 422);
         }
 
-        $data = new Customer();
-        $data->name($request->name);
-        $data->email($request->email);
-        $data->address($request->address);
-        $data->creator();
-        $data->upload();
-    
+        $data = $this->data->name($request->name)
+            ->email($request->email)
+            ->address($request->address)
+            ->upload();
+
         return response()->json($data, 200);
     }
 
@@ -88,23 +93,21 @@ class CustomerController extends Controller
             ], 422);
         }
 
-        $data = new Customer();
-        $data->name = $request->name;
-        $data->creator = Auth::user()->id;
-        $data->save();
-        $data->slug = $data->id . uniqid(5);
-        $data->save();
+        $data = $this->data->name($request->name)
+            ->email($request->email)
+            ->address($request->address)
+            ->upload();
 
         return response()->json($data, 200);
     }
 
     public function update()
     {
-        $data = Customer::find(request()->id);
-        if(!$data){
+        $data = $this->data->findById(request()->id);
+        if (!$data) {
             return response()->json([
                 'err_message' => 'validation error',
-                'errors' => ['name'=>['user_role not found by given id '.(request()->id?request()->id:'null')]],
+                'errors' => ['name' => ['user_role not found by given id ' . (request()->id ? request()->id : 'null')]],
             ], 422);
         }
 
@@ -119,19 +122,21 @@ class CustomerController extends Controller
             ], 422);
         }
 
-        $data->name = request()->name;
-        $data->update();
+        $data->name(request()->name)
+            ->email(request()->email)
+            ->address(request()->address)
+            ->upload();
 
         return response()->json($data, 200);
     }
 
     public function canvas_update()
     {
-        $data = Customer::find(request()->id);
-        if(!$data){
+        $data = $this->data->findById(request()->id);
+        if (!$data) {
             return response()->json([
                 'err_message' => 'validation error',
-                'errors' => ['name'=>['user_role not found by given id '.(request()->id?request()->id:'null')]],
+                'errors' => ['name' => ['user_role not found by given id ' . (request()->id ? request()->id : 'null')]],
             ], 422);
         }
 
@@ -146,8 +151,10 @@ class CustomerController extends Controller
             ], 422);
         }
 
-        $data->name = request()->name;
-        $data->save();
+        $data->name(request()->name)
+            ->email(request()->email)
+            ->address(request()->address)
+            ->upload();
 
         return response()->json($data, 200);
     }
@@ -155,7 +162,7 @@ class CustomerController extends Controller
     public function soft_delete()
     {
         $validator = Validator::make(request()->all(), [
-            'id' => ['required','exists:categories,id'],
+            'id' => ['required', 'exists:categories,id'],
         ]);
 
         if ($validator->fails()) {
@@ -170,7 +177,7 @@ class CustomerController extends Controller
         $data->save();
 
         return response()->json([
-                'result' => 'deactivated',
+            'result' => 'deactivated',
         ], 200);
     }
 
@@ -181,10 +188,10 @@ class CustomerController extends Controller
     public function status_update()
     {
         $data = Customer::find(request()->id);
-        if(!$data){
+        if (!$data) {
             return response()->json([
                 'err_message' => 'validation error',
-                'errors' => ['name'=>['Customer not found by given id '.(request()->id?request()->id:'null')]],
+                'errors' => ['name' => ['Customer not found by given id ' . (request()->id ? request()->id : 'null')]],
             ], 422);
         }
 
@@ -194,11 +201,11 @@ class CustomerController extends Controller
         return response()->json($data, 200);
     }
 
-    
+
     public function restore()
     {
         $validator = Validator::make(request()->all(), [
-            'id' => ['required','exists:categories,id'],
+            'id' => ['required', 'exists:categories,id'],
         ]);
 
         if ($validator->fails()) {
@@ -213,14 +220,14 @@ class CustomerController extends Controller
         $data->save();
 
         return response()->json([
-                'result' => 'activated',
+            'result' => 'activated',
         ], 200);
     }
 
     public function bulk_import()
     {
         $validator = Validator::make(request()->all(), [
-            'data' => ['required','array'],
+            'data' => ['required', 'array'],
         ]);
 
         if ($validator->fails()) {
@@ -231,11 +238,11 @@ class CustomerController extends Controller
         }
 
         foreach (request()->data as $item) {
-            $item['created_at'] = $item['created_at'] ? Carbon::parse($item['created_at']): Carbon::now()->toDateTimeString();
-            $item['updated_at'] = $item['updated_at'] ? Carbon::parse($item['updated_at']): Carbon::now()->toDateTimeString();
+            $item['created_at'] = $item['created_at'] ? Carbon::parse($item['created_at']) : Carbon::now()->toDateTimeString();
+            $item['updated_at'] = $item['updated_at'] ? Carbon::parse($item['updated_at']) : Carbon::now()->toDateTimeString();
             $item = (object) $item;
-            $check = Customer::where('id',$item->id)->first();
-            if(!$check){
+            $check = Customer::where('id', $item->id)->first();
+            if (!$check) {
                 try {
                     Customer::create((array) $item);
                 } catch (\Throwable $th) {
