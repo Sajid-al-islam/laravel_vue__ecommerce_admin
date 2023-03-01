@@ -24,6 +24,27 @@
                                 <td>Name</td>
                                 <td>{{ this[`get_${store_prefix}`].name }}</td>
                             </tr>
+
+                            <tr>
+                                <td>Address</td>
+                                <td>{{ this[`get_${store_prefix}`].address }}</td>
+                            </tr>
+
+                            <tr v-if="this[`get_${store_prefix}`].email">
+                                <td>Email</td>
+                                <td>{{ this[`get_${store_prefix}`].email }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Phone numbers</td>
+                                <td>
+                                    <ul>
+                                        <li v-for="(phone, index) in this[`get_${store_prefix}`].phone_numbers" :key="index">
+                                            {{ phone.mobile_number }}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
                             
                             <tr>
                                 <td>status </td>

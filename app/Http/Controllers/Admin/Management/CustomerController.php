@@ -50,7 +50,7 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $data = Customer::where('id', $id)->first();
+        $data = Customer::where('id', $id)->with('phone_numbers')->first();
         if (!$data) {
             return response()->json([
                 'err_message' => 'not found',
