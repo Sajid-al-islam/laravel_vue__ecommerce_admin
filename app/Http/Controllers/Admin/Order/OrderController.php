@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -217,6 +218,29 @@ class OrderController extends Controller
         $total_pending_order = Order::where('order_status', 'Pending')->count();
         $total_product = Product::count();
         $total_categories = Category::count();
+
+        $top_selling_product = DB::table('products')
+            ->whereExists(function ($query) {
+                $query->from('order_details')
+                ->whereColumn('order_details.product_id', 'products.id');
+            })
+            ->leftJoin('order_details','products.id','=','order_details.product_id')
+            ->selectRaw('products.id, COALESCE(sum(order_details.qty),0) total')
+            ->groupBy('products.id')
+            ->orderBy('total','desc')
+            ->get();
+
+        $less_selling_product = DB::table('products')
+            ->whereExists(function ($query) {
+                $query->from('order_details')
+                ->whereColumn('order_details.product_id', '!=' ,'products.id');
+            })
+            ->leftJoin('order_details','products.id','=','order_details.product_id')
+            ->selectRaw('products.id, COALESCE(sum(order_details.qty),0) total')
+            ->groupBy('products.id')
+            ->orderBy('total','desc')
+            ->get();
+
         $data = [
             "total_sales" => $total_sales,
             "total_sales_this_month" => $total_sales_this_month,
@@ -225,6 +249,8 @@ class OrderController extends Controller
             "total_pending_order" => $total_pending_order,
             "total_product" => $total_product,
             "total_categories" => $total_categories,
+            "top_selling_product" => count($top_selling_product),
+            "less_selling_product" => count($less_selling_product)
         ];
         return response()->json($data, 200);
     }

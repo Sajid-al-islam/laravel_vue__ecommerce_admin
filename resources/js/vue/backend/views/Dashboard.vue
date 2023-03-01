@@ -91,7 +91,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-primary me-3 p-2"><i class="fa-solid fa-boxes-packing"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">230k</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.top_selling_product }}</h5>
                                         <small>Top Selling Products</small>
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="badge rounded-pill bg-label-info me-3 p-2"><i class="fa-solid fa-box-archive"></i></div>
                                     <div class="card-info">
-                                        <h5 class="mb-0">8.549k</h5>
+                                        <h5 class="mb-0">{{ get_dashboard_stat.less_selling_product }}</h5>
                                         <small>Less selling products</small>
                                     </div>
                                 </div>
