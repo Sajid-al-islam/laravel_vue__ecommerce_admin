@@ -12,6 +12,7 @@ import contact_meesage_route from './dashboard_routes/contact_meesage_route'
 import product_route from './dashboard_routes/product_route'
 import category_route from './dashboard_routes/category_route'
 import brand_route from './dashboard_routes/brand_route'
+import customer_route from './dashboard_routes/customer_route'
 import order_route from './dashboard_routes/order_route'
 
 Vue.use(VueRouter);
@@ -32,7 +33,8 @@ const routes = [{
             product_route,
             category_route,
             brand_route,
-            order_route
+            order_route,
+            customer_route
         ]
     },
     {

@@ -28,9 +28,11 @@ class CustomerController extends Controller
             $key = request()->search_key;
             $query->where(function ($q) use ($key) {
                 return $q->where('id', $key)
-                    ->orWhere('Customer_status', $key)
-                    ->orWhere('total_price', 'LIKE', '%' . $key . '%')
-                    ->orWhere('invoice_id', 'LIKE', '%' . $key . '%');
+                    ->orWhere('name', $key)
+                    ->orWhere('name', 'LIKE', '%' . $key . '%')
+                    ->orWhere('email', $key)
+                    ->orWhere('email', 'LIKE', '%' . $key . '%')
+                    ->orWhere('address', 'LIKE', '%' . $key . '%');
             });
         }
 
@@ -40,9 +42,7 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $data = Customer::where('id',$id)->with(['Customer_address', 'Customer_payments','Customer_details' => function($q) {
-            $q->with('product');
-        }])->first();
+        $data = Customer::where('id',$id)->first();
         if(!$data){
             return response()->json([
                 'err_message' => 'not found',
@@ -55,7 +55,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make(request()->all(), [
-            'name' => ['required', 'unique:Customers']
+            'name' => ['required', 'unique:customers']
         ]);
 
         if ($validator->fails()) {
@@ -66,11 +66,11 @@ class CustomerController extends Controller
         }
 
         $data = new Customer();
-        $data->name = $request->name;
-        $data->creator = Auth::user()->id;
-        $data->save();
-        $data->slug = $data->id . uniqid(5);
-        $data->save();
+        $data->name($request->name);
+        $data->email($request->email);
+        $data->address($request->address);
+        $data->creator();
+        $data->upload();
     
         return response()->json($data, 200);
     }

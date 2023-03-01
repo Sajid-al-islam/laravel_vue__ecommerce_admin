@@ -47,6 +47,11 @@
                 <left-nav-list-item :to="'AllBrand'" :text="'Brand Lists'" />
             </left-nav-list-group>
 
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-users`" :text="`Customer Management`" :alert_count="0">
+                <left-nav-list-item :to="'CreateCustomer'" :text="'Create customer'" />
+                <left-nav-list-item :to="'AllCustomer'" :text="'customer Lists'" />
+            </left-nav-list-group>
+
             <left-nav-list-single :role_permissions="['super_admin','admin']" :icon="'fa fa-envelope'" :text="'Email'" :alert_count="15" />
 
             <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-gears`" :text="`Settings`" :alert_count="0">
