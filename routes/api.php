@@ -133,6 +133,34 @@ Route::group(
                 Route::get('/{id}','Admin\Order\OrderController@show');
             });
 
+            Route::group(['prefix' => 'customer'], function () {
+                Route::get('/all','Admin\Order\OrderController@all');
+                Route::post('/update','Admin\Order\OrderController@update');
+                Route::post('/canvas-update','Admin\Order\OrderController@canvas_update');
+                Route::post('/soft-delete','Admin\Order\OrderController@soft_delete');
+                Route::post('/destroy','Admin\Order\OrderController@destroy');
+                Route::post('/restore','Admin\Order\OrderController@restore');
+                Route::post('/bulk-import','Admin\Order\OrderController@bulk_import');
+                Route::post('/status_update','Admin\Order\OrderController@status_update');
+                Route::post('/send_emails','Admin\Order\OrderController@send_email');
+                Route::post('/dashboard_info','Admin\Order\OrderController@dashboard_info');
+                Route::get('/{id}','Admin\Order\OrderController@show');
+            });
+
+            Route::group(['prefix' => 'supplier'], function () {
+                Route::get('/all','Admin\Order\OrderController@all');
+                Route::post('/update','Admin\Order\OrderController@update');
+                Route::post('/canvas-update','Admin\Order\OrderController@canvas_update');
+                Route::post('/soft-delete','Admin\Order\OrderController@soft_delete');
+                Route::post('/destroy','Admin\Order\OrderController@destroy');
+                Route::post('/restore','Admin\Order\OrderController@restore');
+                Route::post('/bulk-import','Admin\Order\OrderController@bulk_import');
+                Route::post('/status_update','Admin\Order\OrderController@status_update');
+                Route::post('/send_emails','Admin\Order\OrderController@send_email');
+                Route::post('/dashboard_info','Admin\Order\OrderController@dashboard_info');
+                Route::get('/{id}','Admin\Order\OrderController@show');
+            });
+
             Route::group(['prefix' => 'dashboard'], function () {
                 Route::get('/dashboard_info','Admin\Order\OrderController@dashboard_info');
             });
