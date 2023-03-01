@@ -49,4 +49,9 @@ class Customer extends Model
 
         return $this->save();
     }
+
+    public function phone_numbers()
+    {
+        return $this->hasMany(MobileNumber::class, 'user_id', 'id');
+    }
 }

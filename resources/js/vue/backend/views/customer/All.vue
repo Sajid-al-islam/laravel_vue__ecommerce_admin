@@ -74,7 +74,6 @@
                             <table-th :sort="true" :tkey="'name'" :title="' Name'" />
                             <table-th :sort="true" :tkey="'address'" :title="'Address'" />
                             <table-th :sort="true" :tkey="'email'" :title="'Email'" />
-                            <table-th :sort="true" :tkey="'mobile_number'" :title="'Mobile number'" />
                             <table-th :sort="true" :tkey="'status'" :title="'Status'" />
                             <th aria-label="actions">Actions</th>
                         </tr>
@@ -96,9 +95,6 @@
                             </td>
                             <td>
                                 {{ item.email }}
-                            </td>
-                            <td>
-                                {{ item.mobile_number }}
                             </td>
                             <td>
                                 <span v-if="item.status == 1" class="badge bg-label-success me-1">active</span>

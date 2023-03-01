@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\MobileNumber;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,7 @@ class CustomerController extends Controller
             });
         }
 
-        $users = $query->paginate($paginate);
+        $users = $query->with('phone_numbers')->paginate($paginate);
         return response()->json($users);
     }
 
@@ -61,6 +62,7 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
+
         $validator = Validator::make(request()->all(), [
             'name' => ['required', 'unique:customers']
         ]);
@@ -76,6 +78,15 @@ class CustomerController extends Controller
             ->email($request->email)
             ->address($request->address)
             ->upload();
+
+        foreach(json_decode(request()->mobile_numbers) as $mobile_no) {
+            $mobile_number = new MobileNumber();
+            $mobile_number->user_id = $this->data->id;
+            $mobile_number->mobile_number = $mobile_no->phone_no;
+            $mobile_number->table_name = "customers";
+            $mobile_number->creator = Auth::user()->id;
+            $mobile_number->save();
+        }
 
         return response()->json($data, 200);
     }

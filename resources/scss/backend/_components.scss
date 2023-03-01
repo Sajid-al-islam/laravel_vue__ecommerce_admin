@@ -172,6 +172,20 @@
 
     tbody {
         tr {
+            &:last-child {
+                td {
+                    .table_actions {
+                        &:hover {
+                            ul {
+                                transform: translate(0, 0) scale(1);
+                                top: unset;
+                                bottom: -15px;
+                            }
+                        }
+                    }
+                }
+            }
+            
             &:first-child {
                 td {
                     .table_actions {
@@ -186,19 +200,7 @@
                 }
             }
 
-            &:last-child {
-                td {
-                    .table_actions {
-                        &:hover {
-                            ul {
-                                transform: translate(0, 0) scale(1);
-                                top: unset;
-                                bottom: -15px;
-                            }
-                        }
-                    }
-                }
-            }
+            
 
             td {
                 text-align: center;
