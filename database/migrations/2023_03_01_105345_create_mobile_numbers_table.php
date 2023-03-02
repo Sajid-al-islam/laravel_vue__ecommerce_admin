@@ -17,7 +17,7 @@ class CreateMobileNumbersTable extends Migration
             $table->id();
             $table->bigInteger('user_id')->nullable();
             $table->string('table_name',100)->nullable();
-            $table->string('mobile_number',100)->nullable();
+            $table->string('phone_no',100)->nullable();
             $table->bigInteger('creator')->nullable();
             $table->string('slug',100)->nullable();
             $table->integer('status')->default(1);

@@ -82,7 +82,7 @@ class CustomerController extends Controller
         foreach(json_decode(request()->mobile_numbers) as $mobile_no) {
             $mobile_number = new MobileNumber();
             $mobile_number->user_id = $this->data->id;
-            $mobile_number->mobile_number = $mobile_no->phone_no;
+            $mobile_number->phone_no = $mobile_no->phone_no;
             $mobile_number->table_name = "customers";
             $mobile_number->creator = Auth::user()->id;
             $mobile_number->save();
@@ -138,7 +138,17 @@ class CustomerController extends Controller
             ->address(request()->address)
             ->upload();
 
-        return response()->json($data, 200);
+        $delete = MobileNumber::where('user_id', $data->id)->delete();
+        foreach(json_decode(request()->mobile_numbers) as $mobile_no) {
+            $mobile_number = new MobileNumber();
+            $mobile_number->user_id = $this->data->id;
+            $mobile_number->phone_no = $mobile_no->phone_no;
+            $mobile_number->table_name = "customers";
+            $mobile_number->creator = Auth::user()->id;
+            $mobile_number->save();
+        }
+
+        return response()->json($data->with('phone_numbers'), 200);
     }
 
     public function canvas_update()
@@ -161,6 +171,7 @@ class CustomerController extends Controller
                 'errors' => $validator->errors(),
             ], 422);
         }
+
 
         $data->name(request()->name)
             ->email(request()->email)

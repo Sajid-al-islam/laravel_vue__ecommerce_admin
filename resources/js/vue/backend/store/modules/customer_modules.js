@@ -31,6 +31,14 @@ const actions = {
         context.state.phone_no.splice(index, 1)
     },
 
+    [`fetch_${store_prefix}`]: async function ({ state }, { id }) {
+        let url = `/${api_prefix}/${id}`;
+        await axios.get(url).then((res) => {
+            state.phone_no = res.data.phone_numbers;
+            this.commit(`set_${store_prefix}`, res.data);
+        });
+    },
+
     [`store_${store_prefix}`]: function({state, getters, commit}){
         const {form_values, form_inputs, form_data} = window.get_form_data(`.create_form`);
         // console.log(form_data, form_inputs, form_values);
@@ -48,6 +56,18 @@ const actions = {
             .catch(error=>{
 
             })
+    },
+
+    [`update_${store_prefix}`]: function ({ state }, event) {
+        const {form_values, form_inputs, form_data} = window.get_form_data(`.update_form`);
+        form_data.append("id", state[store_prefix].id);
+        form_data.append('mobile_numbers', JSON.stringify(state.phone_no));
+        console.log(state.phone_no);
+        axios.post(`/${api_prefix}/update`, form_data).then((res) => {
+            /** reset loaded user_role after data update */
+            // this.commit(`set_${store_prefix}`, null);
+            window.s_alert("data updated");
+        });
     },
 }
 
