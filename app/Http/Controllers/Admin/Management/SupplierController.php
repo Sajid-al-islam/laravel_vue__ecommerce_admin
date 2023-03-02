@@ -14,23 +14,25 @@ class SupplierController extends Controller
     public function all()
     {
         $paginate = (int) request()->paginate;
-        $SupplierBy = request()->SupplierBy;
-        $SupplierByType = request()->SupplierByType;
+        $orderBy = request()->orderBy;
+        $orderByType = request()->orderByType;
 
         $status = 1;
         if (request()->has('status')) {
             $status = request()->status;
         }
 
-        $query = Supplier::where('status', $status)->SupplierBy($SupplierBy, $SupplierByType);
+        $query = Supplier::where('status', $status)->orderBy($orderBy, $orderByType);
 
         if (request()->has('search_key')) {
             $key = request()->search_key;
             $query->where(function ($q) use ($key) {
                 return $q->where('id', $key)
-                    ->orWhere('Supplier_status', $key)
-                    ->orWhere('total_price', 'LIKE', '%' . $key . '%')
-                    ->orWhere('invoice_id', 'LIKE', '%' . $key . '%');
+                ->orWhere('name', $key)
+                ->orWhere('name', 'LIKE', '%' . $key . '%')
+                ->orWhere('email', $key)
+                ->orWhere('email', 'LIKE', '%' . $key . '%')
+                ->orWhere('address', 'LIKE', '%' . $key . '%');
             });
         }
 
@@ -40,9 +42,7 @@ class SupplierController extends Controller
 
     public function show($id)
     {
-        $data = Supplier::where('id',$id)->with(['Supplier_address', 'Supplier_payments','Supplier_details' => function($q) {
-            $q->with('product');
-        }])->first();
+        $data = Supplier::where('id',$id)->with('phone_numbers')->first();
         if(!$data){
             return response()->json([
                 'err_message' => 'not found',

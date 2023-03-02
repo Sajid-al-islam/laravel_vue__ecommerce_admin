@@ -15,6 +15,7 @@
                 <left-nav-list-item :to="'AllRole'" :text="'All roles'" />
                 <left-nav-list-item :to="'CreateRole'" :text="'Create role'" />
             </left-nav-list-group>
+            
 
             <left-nav-list-group :role_permissions="['super_admin','admin']" :icon="`fa fa-list`" :text="`Contact Message`" :alert_count="0">
                 <left-nav-list-item :to="'AllContactMessage'" :text="'All'" />
@@ -50,6 +51,11 @@
             <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-users`" :text="`Customer Management`" :alert_count="0">
                 <left-nav-list-item :to="'CreateCustomer'" :text="'Create customer'" />
                 <left-nav-list-item :to="'AllCustomer'" :text="'customer Lists'" />
+            </left-nav-list-group>
+
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa-solid fa-truck-field`" :text="`Supplier Management`" :alert_count="0">
+                <left-nav-list-item :to="'CreateSupplier'" :text="'Create Supplier'" />
+                <left-nav-list-item :to="'AllSupplier'" :text="'Supplier Lists'" />
             </left-nav-list-group>
 
             <left-nav-list-single :role_permissions="['super_admin','admin']" :icon="'fa fa-envelope'" :text="'Email'" :alert_count="15" />

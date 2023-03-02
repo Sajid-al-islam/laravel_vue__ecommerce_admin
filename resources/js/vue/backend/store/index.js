@@ -15,6 +15,7 @@ import email_invoice_module from './modules/email_invoice_module';
 import company_info_module from './modules/company_info_module';
 import dashboard_stat_module from './modules/dashboard_stat_module';
 import customer_modules from './modules/customer_modules';
+import supplier_modules from './modules/supplier_modules';
 
 const store = new Vuex.Store({
     modules: {
@@ -29,7 +30,8 @@ const store = new Vuex.Store({
         email_invoice_module,
         company_info_module,
         dashboard_stat_module,
-        customer_modules
+        customer_modules,
+        supplier_modules
     },
     state: {},
     getters: {},

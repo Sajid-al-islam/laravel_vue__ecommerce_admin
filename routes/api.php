@@ -149,17 +149,17 @@ Route::group(
             });
 
             Route::group(['prefix' => 'supplier'], function () {
-                Route::get('/all','Admin\Order\OrderController@all');
-                Route::post('/update','Admin\Order\OrderController@update');
-                Route::post('/canvas-update','Admin\Order\OrderController@canvas_update');
-                Route::post('/soft-delete','Admin\Order\OrderController@soft_delete');
-                Route::post('/destroy','Admin\Order\OrderController@destroy');
-                Route::post('/restore','Admin\Order\OrderController@restore');
-                Route::post('/bulk-import','Admin\Order\OrderController@bulk_import');
-                Route::post('/status_update','Admin\Order\OrderController@status_update');
-                Route::post('/send_emails','Admin\Order\OrderController@send_email');
-                Route::post('/dashboard_info','Admin\Order\OrderController@dashboard_info');
-                Route::get('/{id}','Admin\Order\OrderController@show');
+                Route::get('/all','Admin\Management\SupplierController@all');
+                Route::post('/update','Admin\Management\SupplierController@update');
+                Route::post('/canvas-update','Admin\Management\SupplierController@canvas_update');
+                Route::post('/soft-delete','Admin\Management\SupplierController@soft_delete');
+                Route::post('/destroy','Admin\Management\SupplierController@destroy');
+                Route::post('/restore','Admin\Management\SupplierController@restore');
+                Route::post('/bulk-import','Admin\Management\SupplierController@bulk_import');
+                Route::post('/status_update','Admin\Management\SupplierController@status_update');
+                Route::post('/send_emails','Admin\Management\SupplierController@send_email');
+                Route::post('/dashboard_info','Admin\Management\SupplierController@dashboard_info');
+                Route::get('/{id}','Admin\Management\SupplierController@show');
             });
 
             Route::group(['prefix' => 'dashboard'], function () {
