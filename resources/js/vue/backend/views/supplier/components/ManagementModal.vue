@@ -40,7 +40,7 @@
                                 <th><input @click="call_store(`set_select_all_${store_prefix}s`)" type="checkbox" class="form-check-input"></th>
                                 <table-th :sort="true" :ariaLable="'id'" :tkey="'id'" :title="'ID'" />
                                 <table-th :sort="true" :tkey="'name'" :title="'Title'" />
-                                <table-th :sort="true" :tkey="'role_serial'" :title="'Role Serial'" />
+                                <table-th :sort="true" :tkey="'address'" :title="'Address'" />
                                 <table-th :sort="true" :tkey="'status'" :title="'Status'" />
                                 <th aria-label="actions">Actions</th>
                             </tr>
@@ -57,7 +57,7 @@
                                         {{ item.name }}
                                     </span>
                                 </td>
-                                <td>{{ item.role_serial }}</td>
+                                <td>{{ item.address }}</td>
                                 <td>
                                     <span v-if="item.status == 1" class="badge bg-label-success me-1">active</span>
                                     <span v-if="item.status == 0" class="badge bg-label-success me-1">deactive</span>

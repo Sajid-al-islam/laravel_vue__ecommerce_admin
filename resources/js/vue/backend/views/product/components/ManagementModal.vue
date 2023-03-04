@@ -23,10 +23,10 @@
                     </div>
                 </div>
                 <div class="selected">
-                    <div class="item" v-for="user in get_user_role_selected" :key="user.id">
-                        <button @click.prevent="set_selected_user_roles(user)" class="btn rounded-pill btn-outline-secondary" type="button">
+                    <div class="item" v-for="user in this[`get_${store_prefix}_selected`]" :key="user.id">
+                        <button @click.prevent="call_store(`set_selected_${store_prefix}s`,user)" class="btn rounded-pill btn-outline-secondary" type="button">
                             <span>
-                                {{ user.name }}
+                                {{ user.product_name }}
                             </span>
                             <span>|</span>
                             <i class="fa fa-times"></i>
@@ -37,27 +37,27 @@
                     <table class="table table-hover table-bordered">
                         <thead class="table-light">
                             <tr>
-                                <th><input @click="set_select_all_user_roles()" type="checkbox" class="form-check-input"></th>
+                                <th><input @click="call_store(`set_select_all_${store_prefix}s`)" type="checkbox" class="form-check-input"></th>
                                 <table-th :sort="true" :ariaLable="'id'" :tkey="'id'" :title="'ID'" />
                                 <table-th :sort="true" :tkey="'name'" :title="'Title'" />
-                                <table-th :sort="true" :tkey="'role_serial'" :title="'Role Serial'" />
+                                <table-th :sort="true" :tkey="'default_price'" :title="'Price'" />
                                 <table-th :sort="true" :tkey="'status'" :title="'Status'" />
                                 <th aria-label="actions">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            <tr v-for="item in get_user_roles.data" :key="item.id">
+                            <tr v-for="item in this[`get_${store_prefix}s`].data" :key="item.id">
                                 <td>
-                                    <input v-if="check_if_data_is_selected(item)" :data-id="item.id" checked @change="set_selected_user_roles(item)" type="checkbox" class="form-check-input">
-                                    <input v-else @change="set_selected_user_roles(item)" type="checkbox" class="form-check-input">
+                                    <input v-if="check_if_data_is_selected(item)" :data-id="item.id" checked @change="call_store(`set_selected_${store_prefix}s`,item)" type="checkbox" class="form-check-input">
+                                    <input v-else @change="call_store(`set_selected_${store_prefix}s`,item)" type="checkbox" class="form-check-input">
                                 </td>
                                 <td>{{ item.id }}</td>
                                 <td>
-                                    <span class="text-warning cursor_pointer" @click.prevent="set_user_role(item)">
-                                        {{ item.name }}
+                                    <span class="text-warning cursor_pointer" @click.prevent="call_store(`set_${store_prefix}`,item)">
+                                        {{ item.product_name }}
                                     </span>
                                 </td>
-                                <td>{{ item.role_serial }}</td>
+                                <td>{{ item.default_price }}</td>
                                 <td>
                                     <span v-if="item.status == 1" class="badge bg-label-success me-1">active</span>
                                     <span v-if="item.status == 0" class="badge bg-label-success me-1">deactive</span>
@@ -92,7 +92,7 @@
                     </pagination>
                     <button type="button" @click.prevent="call_store(`set_${store_prefix}_show_management_modal`,(false))" href="#" class="btn rounded-pill btn-outline-secondary">
                         <i class="fa fa-floppy-disk"></i>
-                        Save & Close
+                        Save &amp; Close
                     </button>
                 </div>
             </div>

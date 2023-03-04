@@ -44,9 +44,9 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['upload_user_role_create_canvas_input']),
+        ...mapActions([`upload_${store_prefix}_create_canvas_input`]),
         ...mapMutations([
-            'set_user_role_show_create_canvas',
+            `set_${store_prefix}_show_create_canvas`,
         ]),
 
         call_store: function(name, params=null){
@@ -54,7 +54,9 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(['get_user_role_show_create_canvas'])
+        ...mapGetters([
+            `get_${store_prefix}_show_create_canvas`
+        ])
     }
 }
 </script>

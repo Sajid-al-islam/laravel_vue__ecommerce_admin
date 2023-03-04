@@ -34,6 +34,12 @@
                 <!-- <left-nav-list-item :to="'AllProduct'" :text="'Product categories'" /> -->
             </left-nav-list-group>
 
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-boxes`" :text="`Product Stock Management`" :alert_count="0">
+                <left-nav-list-item :to="'CreateProductStock'" :text="'Create product Stock'" />
+                <left-nav-list-item :to="'AllProductStock'" :text="'Product Stock Lists'" />
+                <!-- <left-nav-list-item :to="'AllProduct'" :text="'Product categories'" /> -->
+            </left-nav-list-group>
+
             <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-shopping-cart`" :text="`Order Management`" :alert_count="0">
                 <left-nav-list-item :to="'AllOrder'" :text="'Order Lists'" />
             </left-nav-list-group>
