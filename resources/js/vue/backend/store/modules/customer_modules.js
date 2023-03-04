@@ -52,6 +52,7 @@ const actions = {
                 $(`${store_prefix}_create_form input`).val('');
                 commit(`set_clear_selected_${store_prefix}s`,false);
                 management_router.push({name:`All${route_prefix}`})
+                commit(`set_phone_no`, []);
             })
             .catch(error=>{
 
@@ -73,7 +74,9 @@ const actions = {
 // mutators
 const mutations = {
     ...test_module.mutations(),
-
+    [`set_phone_no`]: function (state, data) {
+        state.phone_no = data;
+    },
 };
 
 

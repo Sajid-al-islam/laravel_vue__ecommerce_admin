@@ -16,18 +16,18 @@ const state = {
 // get state
 const getters = {
     ...test_module.getters(),
-    get_customer_phone_no: state => state.phone_no,
+    get_supplier_phone_no: state => state.phone_no,
 };
 
 // actions
 const actions = {
     ...test_module.actions(),
-    add_customer_phone_no: function (context, phone_no) {
+    add_supplier_phone_no: function (context, phone_no) {
         context.state.phone_no.push({
             phone_no: "",
         });
     },
-    remove_customer_phone_no: function(context, index) {
+    remove_supplier_phone_no: function(context, index) {
         context.state.phone_no.splice(index, 1)
     },
 

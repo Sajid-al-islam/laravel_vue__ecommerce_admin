@@ -11,6 +11,6 @@ class Supplier extends Model
 
     public function phone_numbers()
     {
-        return $this->hasMany(MobileNumber::class, 'user_id', 'id');
+        return $this->hasMany(MobileNumber::class, 'user_id')->where('table_name', 'suppliers');
     }
 }

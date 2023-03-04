@@ -37,7 +37,7 @@
                             <td>
                                 <ul>
                                     <li v-for="(phone, index) in this[`get_${store_prefix}`].phone_numbers" :key="index">
-                                        {{ phone.mobile_number }}
+                                        {{ phone.phone_no }}
                                     </li>
                                 </ul>
 

@@ -115,6 +115,7 @@ class CustomerController extends Controller
     public function update()
     {
         $data = $this->data->findById(request()->id);
+        
         if (!$data) {
             return response()->json([
                 'err_message' => 'validation error',
@@ -141,7 +142,7 @@ class CustomerController extends Controller
         $delete = MobileNumber::where('user_id', $data->id)->delete();
         foreach(json_decode(request()->mobile_numbers) as $mobile_no) {
             $mobile_number = new MobileNumber();
-            $mobile_number->user_id = $this->data->id;
+            $mobile_number->user_id = $data->id;
             $mobile_number->phone_no = $mobile_no->phone_no;
             $mobile_number->table_name = "customers";
             $mobile_number->creator = Auth::user()->id;
@@ -184,7 +185,7 @@ class CustomerController extends Controller
     public function soft_delete()
     {
         $validator = Validator::make(request()->all(), [
-            'id' => ['required', 'exists:categories,id'],
+            'id' => ['required', 'exists:customers,id'],
         ]);
 
         if ($validator->fails()) {
@@ -227,7 +228,7 @@ class CustomerController extends Controller
     public function restore()
     {
         $validator = Validator::make(request()->all(), [
-            'id' => ['required', 'exists:categories,id'],
+            'id' => ['required', 'exists:customers,id'],
         ]);
 
         if ($validator->fails()) {

@@ -74,6 +74,15 @@ class SupplierController extends Controller
         $data->save();
         $data->slug = $data->id . uniqid(5);
         $data->save();
+
+        foreach(json_decode(request()->mobile_numbers) as $mobile_no) {
+            $mobile_number = new MobileNumber();
+            $mobile_number->user_id = $data->id;
+            $mobile_number->phone_no = $mobile_no->phone_no;
+            $mobile_number->table_name = "suppliers";
+            $mobile_number->creator = Auth::user()->id;
+            $mobile_number->save();
+        }
     
         return response()->json($data, 200);
     }
@@ -81,7 +90,7 @@ class SupplierController extends Controller
     public function canvas_store(Request $request)
     {
         $validator = Validator::make(request()->all(), [
-            'name' => ['required', 'unique:Suppliers']
+            'name' => ['required', 'unique:suppliers']
         ]);
 
         if ($validator->fails()) {
@@ -99,15 +108,6 @@ class SupplierController extends Controller
         $data->save();
         $data->slug = $data->id . uniqid(5);
         $data->save();
-
-        foreach(json_decode(request()->mobile_numbers) as $mobile_no) {
-            $mobile_number = new MobileNumber();
-            $mobile_number->user_id = $data->id;
-            $mobile_number->phone_no = $mobile_no->phone_no;
-            $mobile_number->table_name = "suppliers";
-            $mobile_number->creator = Auth::user()->id;
-            $mobile_number->save();
-        }
 
         return response()->json($data, 200);
     }
@@ -139,6 +139,16 @@ class SupplierController extends Controller
         $data->creator = Auth::user()->id;
         $data->update();
 
+        $delete = MobileNumber::where('user_id', $data->id)->delete();
+        foreach(json_decode(request()->mobile_numbers) as $mobile_no) {
+            $mobile_number = new MobileNumber();
+            $mobile_number->user_id = $data->id;
+            $mobile_number->phone_no = $mobile_no->phone_no;
+            $mobile_number->table_name = "suppliers";
+            $mobile_number->creator = Auth::user()->id;
+            $mobile_number->save();
+        }
+
         return response()->json($data, 200);
     }
 
@@ -164,6 +174,10 @@ class SupplierController extends Controller
         }
 
         $data->name = request()->name;
+        $data->address = request()->address;
+        $data->email = request()->email;
+        $data->creator = Auth::user()->id;
+        $data->update();
         $data->save();
 
         return response()->json($data, 200);
@@ -172,7 +186,7 @@ class SupplierController extends Controller
     public function soft_delete()
     {
         $validator = Validator::make(request()->all(), [
-            'id' => ['required','exists:categories,id'],
+            'id' => ['required','exists:suppliers,id'],
         ]);
 
         if ($validator->fails()) {
@@ -215,7 +229,7 @@ class SupplierController extends Controller
     public function restore()
     {
         $validator = Validator::make(request()->all(), [
-            'id' => ['required','exists:categories,id'],
+            'id' => ['required','exists:suppliers,id'],
         ]);
 
         if ($validator->fails()) {
