@@ -17,21 +17,21 @@
                             <div class="admin_form form_1">
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2">
                                     <input-field
-                                        :label="`Customer name`"
+                                        :label="`Supplier name`"
                                         :name="`name`"
                                     />
                                 </div>
 
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2">
                                     <input-field
-                                        :label="`Customer Email`"
+                                        :label="`Supplier Email`"
                                         :name="`email`"
                                     />
                                 </div>
 
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2">
                                     <input-field
-                                        :label="`Customer Address`"
+                                        :label="`Supplier Address`"
                                         :name="`address`"
                                     />
                                 </div>

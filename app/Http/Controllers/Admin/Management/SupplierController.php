@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Management;
 
 use App\Http\Controllers\Controller;
+use App\Models\MobileNumber;
 use App\Models\Supplier;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -67,6 +68,8 @@ class SupplierController extends Controller
 
         $data = new Supplier();
         $data->name = $request->name;
+        $data->address = $request->address;
+        $data->email = $request->email;
         $data->creator = Auth::user()->id;
         $data->save();
         $data->slug = $data->id . uniqid(5);
@@ -90,10 +93,21 @@ class SupplierController extends Controller
 
         $data = new Supplier();
         $data->name = $request->name;
+        $data->address = $request->address;
+        $data->email = $request->email;
         $data->creator = Auth::user()->id;
         $data->save();
         $data->slug = $data->id . uniqid(5);
         $data->save();
+
+        foreach(json_decode(request()->mobile_numbers) as $mobile_no) {
+            $mobile_number = new MobileNumber();
+            $mobile_number->user_id = $data->id;
+            $mobile_number->phone_no = $mobile_no->phone_no;
+            $mobile_number->table_name = "suppliers";
+            $mobile_number->creator = Auth::user()->id;
+            $mobile_number->save();
+        }
 
         return response()->json($data, 200);
     }
@@ -120,6 +134,9 @@ class SupplierController extends Controller
         }
 
         $data->name = request()->name;
+        $data->address = request()->address;
+        $data->email = request()->email;
+        $data->creator = Auth::user()->id;
         $data->update();
 
         return response()->json($data, 200);

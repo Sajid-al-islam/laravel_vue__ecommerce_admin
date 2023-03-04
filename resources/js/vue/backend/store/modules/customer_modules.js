@@ -62,7 +62,6 @@ const actions = {
         const {form_values, form_inputs, form_data} = window.get_form_data(`.update_form`);
         form_data.append("id", state[store_prefix].id);
         form_data.append('mobile_numbers', JSON.stringify(state.phone_no));
-        console.log(state.phone_no);
         axios.post(`/${api_prefix}/update`, form_data).then((res) => {
             /** reset loaded user_role after data update */
             // this.commit(`set_${store_prefix}`, null);

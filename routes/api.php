@@ -150,6 +150,7 @@ Route::group(
 
             Route::group(['prefix' => 'supplier'], function () {
                 Route::get('/all','Admin\Management\SupplierController@all');
+                Route::post('/store','Admin\Management\SupplierController@store');
                 Route::post('/update','Admin\Management\SupplierController@update');
                 Route::post('/canvas-update','Admin\Management\SupplierController@canvas_update');
                 Route::post('/soft-delete','Admin\Management\SupplierController@soft_delete');
