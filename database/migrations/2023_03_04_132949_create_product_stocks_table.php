@@ -15,6 +15,12 @@ class CreateProductStocksTable extends Migration
     {
         Schema::create('product_stocks', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('supplier_id')->nullable();
+            $table->bigInteger('product_id')->nullable();
+            $table->dateTime('purchase_date')->nullable();
+            $table->bigInteger('qty')->nullable();
+            $table->bigInteger('creator')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
