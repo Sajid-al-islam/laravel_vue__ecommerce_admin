@@ -71,9 +71,10 @@
                         <tr>
                             <th><input @click="call_store(`set_select_all_${store_prefix}s`)" type="checkbox" class="form-check-input check_all"></th>
                             <table-th :sort="true" :tkey="'id'" :title="'ID'" :ariaLable="'id'"/>
-                            <table-th :sort="true" :tkey="'name'" :title="' Supplier Name'" />
-                            <table-th :sort="true" :tkey="'address'" :title="'Products'" />
-                            <table-th :sort="true" :tkey="'email'" :title="'Email'" />
+                            <table-th :title="' Supplier Name'" />
+                            <table-th :title="'Product Name'" />
+                            <table-th :sort="true" :tkey="'qty'" :title="'Quantity'" />
+                            <table-th :sort="true" :tkey="'purchase_date'" :title="'Purchase Date'" />
                             <table-th :sort="true" :tkey="'status'" :title="'Status'" />
                             <th aria-label="actions">Actions</th>
                         </tr>
@@ -91,10 +92,13 @@
                                 </span>
                             </td>
                             <td>
-                                {{ item.address }}
+                                {{ item.product.product_name }}
                             </td>
                             <td>
-                                {{ item.email }}
+                                {{ item.qty }}
+                            </td>
+                            <td>
+                                {{ item.purchase_date }}
                             </td>
                             <td>
                                 <span v-if="item.status == 1" class="badge bg-label-success me-1">active</span>
@@ -260,4 +264,3 @@ export default {
 
 </style>
 
-PermissionButton

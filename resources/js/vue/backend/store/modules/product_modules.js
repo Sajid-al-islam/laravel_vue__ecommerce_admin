@@ -53,7 +53,8 @@ const actions = {
             .then(res=>{
                 window.s_alert(`new ${store_prefix} has been created`);
                 $(`${store_prefix}_create_form input`).val('');
-                commit(`set_clear_selected_${store_prefix}s`,false);
+                commit(`set_clear_selected_products`,false);
+                commit(`set_clear_selected_suppliers`,false);
                 management_router.push({name:`All${route_prefix}`})
             })
             .catch(error=>{

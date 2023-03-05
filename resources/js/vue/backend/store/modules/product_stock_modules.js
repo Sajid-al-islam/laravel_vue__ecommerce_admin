@@ -17,6 +17,14 @@ const getters = {
 // actions
 const actions = {
     ...test_module.actions(),
+    [`fetch_${store_prefix}`]: async function ({ state, commit }, { id }) {
+        let url = `/${api_prefix}/${id}`;
+        await axios.get(url).then((res) => {
+            this.commit(`set_${store_prefix}`, res.data);
+            commit(`set_selected_products`, res.data.product_id);
+            commit(`set_selected_suppliers`, res.data.supplier_id);
+        });
+    },
     [`store_${store_prefix}`]: function({state, getters, commit}){
         const {form_values, form_inputs, form_data} = window.get_form_data(`.product_stock_create_form`);
         console.log(form_data, form_values);
@@ -40,6 +48,25 @@ const actions = {
             .catch(error=>{
 
             })
+    },
+    [`update_${store_prefix}`]: function ({ state, getters, commit }, event) {
+        const {form_values, form_inputs, form_data} = window.get_form_data(`.update_form_product_stock`);
+        const {get_product_selected: product} = getters;
+        const {get_supplier_selected: supplier} = getters;
+
+        product.forEach((i)=> {
+            form_data.append('selected_product[]',i.id);
+        });
+
+        supplier.forEach((i)=> {
+            form_data.append('selected_supplier[]',i.id);
+        });
+        form_data.append("id", state[store_prefix].id);
+        axios.post(`/${api_prefix}/update`, form_data).then((res) => {
+            /** reset loaded user_role after data update */
+            // this.commit(`set_${store_prefix}`, null);
+            window.s_alert("data updated");
+        });
     },
 }
 

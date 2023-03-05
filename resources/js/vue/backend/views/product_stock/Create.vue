@@ -88,8 +88,6 @@ export default {
         
         ...mapActions([
             `store_${store_prefix}`,
-            `add_customer_phone_no`,
-            `remove_customer_phone_no`
         ]),
         call_store: function(name, params=null){
             this[name](params)

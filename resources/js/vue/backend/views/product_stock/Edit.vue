@@ -12,50 +12,45 @@
                     </a>
                 </div>
             </div>
-            <form @submit.prevent="call_store(`update_${store_prefix}`,$event.target)" autocomplete="false" class="update_form">
+            <form @submit.prevent="call_store(`update_${store_prefix}`,$event.target)" autocomplete="false" class="update_form_product_stock">
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-lg-10">
                             <div class="admin_form form_1" v-if="this[`get_${store_prefix}`]">
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
-                                    <input-field
-                                        :label="`Customer Name`"
-                                        :name="`name`"
-                                        :value="this[`get_${store_prefix}`]['name']"
-                                    />
-                                </div>
-                                <div class="form-group d-aligh align-content-start gap-1 mb-2">
-                                    <input-field
-                                        :label="`Customer Address`"
-                                        :name="`address`"
-                                        :value="this[`get_${store_prefix}`]['address']"
-                                    />
+                                    <div>
+                                        <label class="mb-2 text-capitalize">
+                                            Select supplier
+                                        </label>
+                                        <SupplierManagementModal/>
+                                    </div>
                                 </div>
 
-                                <div class="form-group d-aligh align-content-start gap-1 mb-2">
+                                <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
+                                    <div>
+                                        <label class="mb-2 text-capitalize">
+                                            Select product
+                                        </label>
+                                        <ProductStockManagementModal/>
+                                    </div>
+                                </div>
+
+                                <div class=" form-group d-grid align-content-start gap-1 mb-2">
                                     <input-field
-                                        :label="`Customer Email`"
-                                        :name="`email`"
-                                        :value="this[`get_${store_prefix}`]['email']"
+                                        :label="`Quantity`"
+                                        :name="`qty`"
+                                        :type="`number`"
+                                        :value="this[`get_${store_prefix}`]['qty']"
                                     />
                                 </div>
 
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2">
-                                    <label for="">Mobile number</label>
-                                    <div class="d-flex align-items-center" v-for="(customer_phone, index) in get_customer_phone_no" :key="index">
-                                        <input type="text" v-model="customer_phone.phone_no" placeholder="Mobile number" class="form-control invoice_email" id="mobile_numbers">
-
-                                        <div class="justify-content-between">
-                                            <div class="d-flex"> 
-                                                <button @click.prevent="add_customer_phone_no(index)" class="btn btn-sm btn-outline-primary justify-content-between add_btn_email">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </button>
-                                                <button v-if="get_customer_phone_no.length > 1" class="btn btn-sm btn-outline-danger justify-content-between remove_btn_email" @click.prevent="remove_customer_phone_no(index)">
-                                                    <i class="fa-solid fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <input-field
+                                        :label="`Purchase Date`"
+                                        :name="`purchase_date`"
+                                        :type="`date`"
+                                        :value="this[`get_${store_prefix}`]['purchase_date']"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -74,12 +69,14 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
+import ProductStockManagementModal from "../product/components/ManagementModal.vue"
+import SupplierManagementModal from "../Supplier/components/ManagementModal.vue"
 import InputField from '../components/InputField.vue'
 /** store and route prefix for export object use */
 import PageSetup from './PageSetup';
 const {route_prefix, store_prefix} = PageSetup;
 export default {
-    components: { InputField },
+    components: { InputField, ProductStockManagementModal, SupplierManagementModal },
     data: function(){
         return {
             /** store prefix for JSX */
@@ -94,8 +91,6 @@ export default {
         ...mapActions([
             `update_${store_prefix}`,
             `fetch_${store_prefix}`,
-            `add_customer_phone_no`,
-            `remove_customer_phone_no`
         ]),
         ...mapMutations([
             `set_${store_prefix}`,

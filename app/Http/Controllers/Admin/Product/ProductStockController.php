@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Product;
 use App\Http\Controllers\Controller;
 use App\Models\ProductImage;
 use App\Models\ProductStock;
+use App\Models\ProductStockLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,7 @@ class ProductStockController extends Controller
             });
         }
 
-        $users = $query->with(['products', 'supplier'])->paginate($paginate);
+        $users = $query->with(['product', 'supplier'])->paginate($paginate);
         return response()->json($users);
     }
 
@@ -72,7 +73,7 @@ class ProductStockController extends Controller
         */
         $data = new ProductStock();
         $data->supplier_id = request()->selected_supplier[0];
-        $data->product_id = json_encode(request()->selected_product); 
+        $data->product_id = request()->selected_product[0]; 
         $data->qty = request()->qty; 
         $data->purchase_date = Carbon::parse(request()->purchase_date)->toDateString();
         
@@ -83,6 +84,14 @@ class ProductStockController extends Controller
             type="sales" || insert when a product is ordered
             type="purchase" || inserted when a 
         */
+
+        $dataStock = new ProductStockLog();
+        $dataStock->product_id = $data->product_id;
+        $dataStock->qty = $data->qty; 
+        $dataStock->type = "purchase"; 
+        $dataStock->creator = Auth::user()->id; 
+        $dataStock->save();
+
         return response()->json($data, 200);
     }
 
@@ -90,11 +99,17 @@ class ProductStockController extends Controller
 
     public function canvas_store()
     {
+        
+    }
+
+    public function update()
+    {
+
         $validator = Validator::make(request()->all(), [
-            'full_name' => ['required'],
-            'email' => ['required'],
-            'subject' => ['required'],
-            'message' => ['required'],
+            'selected_product' => ['required'],
+            'selected_supplier' => ['required'],
+            'qty' => ['required','item' => 'required|integer'],
+            'purchase_date' => ['required', 'date']
         ]);
 
         if ($validator->fails()) {
@@ -103,68 +118,34 @@ class ProductStockController extends Controller
                 'errors' => $validator->errors(),
             ], 422);
         }
-
+        
+        $stock_quantity = ProductStock::find(request()->id);
+        
+        /* 
+            First insert the qty data in product stock table
+        */
         $data = new ProductStock();
-        $data->full_name = request()->full_name;
-        $data->email = request()->email;
-        $data->subject = request()->subject;
-        $data->message = request()->message;
+        $data->supplier_id = request()->selected_supplier[0];
+        $data->product_id = request()->selected_product[0]; 
+        $data->qty = request()->qty; 
+        $data->purchase_date = Carbon::parse(request()->purchase_date)->toDateString();
+        
         $data->save();
 
+        /* 
+            Insert the data in stock log table,
+            type="sales" || insert when a product is ordered
+            type="purchase" || inserted when a 
+        */
+
+        $dataStock = new ProductStockLog();
+        $dataStock->product_id = $data->product_id;
+        $dataStock->qty = $data->qty; 
+        $dataStock->type = "purchase"; 
+        $dataStock->creator = Auth::user()->id; 
+        $dataStock->save();
+
         return response()->json($data, 200);
-    }
-
-    public function update()
-    {
-
-        $product_info = request()->except([
-            'selected_categories',
-            'image'
-        ]);
-        $product_info['selected_categories'] = json_encode(request()->selected_categories);
-
-        $product = ProductStock::find(request()->id);
-        $product->fill($product_info);
-
-        if (request()->hasFile('image')) {
-            // dd($request->file('upload_image'));
-            // 
-            foreach ($product->related_image()->get() as $single_imge) {
-                // dump(public_path($single_imge->image), $single_imge);
-                if (file_exists(public_path($single_imge->image))) {
-                    unlink(public_path($single_imge->image));
-                }
-            }
-            ProductImage::where('product_id', $product->id)->delete();
-            foreach (request()->file('image') as $key => $image) {
-                
-                try {
-                    $path = $this->store_product_file($image);
-                    ProductImage::insert([
-                        'product_id' => $product->id,
-                        'image' => $path,
-                        'creator' => Auth::user()->id,
-                        'created_at' => Carbon::now()->toDateTimeString(),
-                    ]);
-                    
-                } catch (Throwable $e) {
-                    report($e);
-                    
-                    return response()->json($e, 500);
-                }
-            }
-        }
-
-        $product->save();
-        $product->categories()->sync(request()->selected_categories);
-
-        // dd($product);
-
-        // $path = '';
-        $message = "product updated!";
-        return response()->json([
-            'message' => $message
-        ], 200);
     }
 
     public function canvas_update()
