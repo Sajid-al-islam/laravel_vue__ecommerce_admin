@@ -11,7 +11,6 @@ const state = {
 // get state
 const getters = {
     ...test_module.getters(),
-    get_customer_phone_no: state => state.phone_no,
 };
 
 // actions
@@ -21,8 +20,9 @@ const actions = {
         let url = `/${api_prefix}/${id}`;
         await axios.get(url).then((res) => {
             this.commit(`set_${store_prefix}`, res.data);
-            commit(`set_selected_products`, res.data.product_id);
-            commit(`set_selected_suppliers`, res.data.supplier_id);
+            console.log(res.data);
+            commit(`set_selected_products`, res.data.product);
+            commit(`set_selected_suppliers`, res.data.supplier);
         });
     },
     [`store_${store_prefix}`]: function({state, getters, commit}){
@@ -37,6 +37,7 @@ const actions = {
         supplier.forEach((i)=> {
             form_data.append('selected_supplier[]',i.id);
         });
+        
         // console.log(form_data);
         axios.post(`/${api_prefix}/store`,form_data)
             .then(res=>{
@@ -65,6 +66,11 @@ const actions = {
         axios.post(`/${api_prefix}/update`, form_data).then((res) => {
             /** reset loaded user_role after data update */
             // this.commit(`set_${store_prefix}`, null);
+            
+            if(res.status == 400 && res.data.err_type == 'quantity_invalid') {
+                window.s_alert(res.data.err_message,"error");
+                console.log('from module');
+            }
             window.s_alert("data updated");
         });
     },

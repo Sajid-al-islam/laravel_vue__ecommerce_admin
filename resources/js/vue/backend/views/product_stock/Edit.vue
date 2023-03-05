@@ -102,7 +102,6 @@ export default {
     computed: {
         ...mapGetters([
             `get_${store_prefix}`,
-            'get_customer_phone_no'
         ])
     }
 };

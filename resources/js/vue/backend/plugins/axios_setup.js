@@ -69,7 +69,7 @@ window.axios.interceptors.response.use(
         if (typeof error ?.response ?.data === "string") {
             console.log("error", error?.response?.data ? error?.response?.data : error.response);
         } else {
-            console.log(error.response);
+            // console.log(error.response);
         }
 
         // if(error.response.status == 401){
