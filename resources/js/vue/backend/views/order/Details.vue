@@ -120,11 +120,11 @@
                                     <label for="order_status_change" class="form-label">Change Status</label>
                                     
                                     <select id="order_status_change" v-model="this[`get_${store_prefix}`].order_status" class="form-select" name="order_status">
-                                        <option value="Pending">Pending</option>
-                                        <option value="Accepted">Accepted</option>
-                                        <option value="Hold">Hold</option>
-                                        <option value="Delivered">Delivered</option>
-                                        <option value="Canceled">Canceled</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="accepted">Accepted</option>
+                                        <option value="delivered">Delivered</option>
+                                        <option value="canceled">Canceled</option>
                                     </select>
                                 </div>
                                 <button class="btn btn-primary">Update</button>

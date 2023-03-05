@@ -10,10 +10,10 @@ class ProductStock extends Model
     use HasFactory;
 
     public function supplier() {
-        return $this->hasOne(Supplier::class, 'supplier_id');
+        return $this->hasOne(Supplier::class, 'id');
     }
 
-    public function prodcuts() {
-        return $this->hasMany(Product::class, 'product_id');
+    public function products() {
+        return $this->hasMany(Product::class, 'id');
     }
 }

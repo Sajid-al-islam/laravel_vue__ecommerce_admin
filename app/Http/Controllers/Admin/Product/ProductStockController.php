@@ -67,6 +67,9 @@ class ProductStockController extends Controller
             ], 422);
         }
         
+        /* 
+            First insert the qty data in product stock table
+        */
         $data = new ProductStock();
         $data->supplier_id = request()->selected_supplier[0];
         $data->product_id = json_encode(request()->selected_product); 
@@ -75,6 +78,11 @@ class ProductStockController extends Controller
         
         $data->save();
 
+        /* 
+            Insert the data in stock log table,
+            type="sales" || insert when a product is ordered
+            type="purchase" || inserted when a 
+        */
         return response()->json($data, 200);
     }
 
