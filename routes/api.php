@@ -94,16 +94,16 @@ Route::group(
             });
 
             Route::group(['prefix' => 'product_stock'], function () {
-                Route::get('/all','Admin\Product\ProductController@all');
-                Route::post('/store','Admin\Product\ProductController@store');
-                Route::post('/canvas-store','Admin\Product\ProductController@canvas_store');
-                Route::post('/update','Admin\Product\ProductController@update');
-                Route::post('/canvas-update','Admin\Product\ProductController@canvas_update');
-                Route::post('/soft-delete','Admin\Product\ProductController@soft_delete');
-                Route::post('/destroy','Admin\Product\ProductController@destroy');
-                Route::post('/restore','Admin\Product\ProductController@restore');
-                Route::post('/bulk-import','Admin\Product\ProductController@bulk_import');
-                Route::get('/{id}','Admin\Product\ProductController@show');
+                Route::get('/all','Admin\Product\ProductStockController@all');
+                Route::post('/store','Admin\Product\ProductStockController@store');
+                Route::post('/canvas-store','Admin\Product\ProductStockController@canvas_store');
+                Route::post('/update','Admin\Product\ProductStockController@update');
+                Route::post('/canvas-update','Admin\Product\ProductStockController@canvas_update');
+                Route::post('/soft-delete','Admin\Product\ProductStockController@soft_delete');
+                Route::post('/destroy','Admin\Product\ProductStockController@destroy');
+                Route::post('/restore','Admin\Product\ProductStockController@restore');
+                Route::post('/bulk-import','Admin\Product\ProductStockController@bulk_import');
+                Route::get('/{id}','Admin\Product\ProductStockController@show');
             });
 
             Route::group(['prefix' => 'category'], function () {

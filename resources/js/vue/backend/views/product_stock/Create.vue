@@ -37,6 +37,15 @@
                                     <input-field
                                         :label="`Product Quantity`"
                                         :name="`qty`"
+                                        :type="`number`"
+                                    />
+                                </div>
+
+                                <div class=" form-group d-grid align-content-start gap-1 mb-2">
+                                    <input-field
+                                        :label="`Purchase Date`"
+                                        :name="`purchase_date`"
+                                        :type="`date`"
                                     />
                                 </div>
                                 

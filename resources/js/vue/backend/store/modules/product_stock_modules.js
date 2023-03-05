@@ -19,9 +19,9 @@ const actions = {
     ...test_module.actions(),
     [`store_${store_prefix}`]: function({state, getters, commit}){
         const {form_values, form_inputs, form_data} = window.get_form_data(`.product_stock_create_form`);
-        console.log(getters);
-        const {get_product_selected: product} = product_stock_create_form;
-        const {get_supplier_selected: supplier} = product_stock_create_form;
+        console.log(form_data, form_values);
+        const {get_product_selected: product} = getters;
+        const {get_supplier_selected: supplier} = getters;
 
         product.forEach((i)=> {
             form_data.append('selected_product[]',i.id);
@@ -30,16 +30,16 @@ const actions = {
             form_data.append('selected_supplier[]',i.id);
         });
         // console.log(form_data);
-        // axios.post(`/${api_prefix}/store`,form_data)
-        //     .then(res=>{
-        //         window.s_alert(`new ${store_prefix} has been created`);
-        //         $(`${store_prefix}_create_form input`).val('');
-        //         commit(`set_clear_selected_${store_prefix}s`,false);
-        //         management_router.push({name:`All${route_prefix}`})
-        //     })
-        //     .catch(error=>{
+        axios.post(`/${api_prefix}/store`,form_data)
+            .then(res=>{
+                window.s_alert(`new ${store_prefix} has been created`);
+                $(`${store_prefix}_create_form input`).val('');
+                commit(`set_clear_selected_${store_prefix}s`,false);
+                management_router.push({name:`All${route_prefix}`})
+            })
+            .catch(error=>{
 
-        //     })
+            })
     },
 }
 
