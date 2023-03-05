@@ -3,7 +3,7 @@
         <div class="multiple_select_data"
             @click="call_store(`set_${store_prefix}_show_management_modal`,true)">
             <div v-for="item in this[`get_${store_prefix}_selected`]" :key="item.id" class="item">
-                {{ item.name }}
+                {{ item.product_name }}
             </div>
             <div class="btn btn-sm btn-outline-danger" v-if="!this[`get_${store_prefix}_selected`].length">
                 no data selected
@@ -19,7 +19,8 @@
                     </div>
                     <div class="action_btns">
                         <a @click.prevent="call_store(`set_clear_selected_${store_prefix}s`)" v-if="this[`get_${store_prefix}_selected`].length" href="#" class="btn rounded-pill btn-outline-danger me-2"><i class="fa fa-trash"></i> remove selected</a>
-                        <a @click.prevent="call_store(`set_${store_prefix}_show_create_canvas`,true)" href="#" class="btn rounded-pill btn-outline-primary"><i class="fa fa-pencil"></i> create</a>
+                        <!-- <a @click.prevent="call_store(`set_${store_prefix}_show_create_canvas`,true)" href="#" class="btn rounded-pill btn-outline-primary"><i class="fa fa-pencil"></i> create</a> -->
+                        <a @click.prevent="not_possible_warning()" href="#" class="btn rounded-pill btn-outline-primary"><i class="fa fa-pencil"></i> create</a>
                     </div>
                 </div>
                 <div class="selected">
@@ -127,6 +128,9 @@ export default {
         this[`fetch_${this.store_prefix}s`]();
     },
     methods: {
+        not_possible_warning() {
+            window.s_alert(`Product create is not possible from here, please go to product menu!`, 'warning');
+        },
         ...mapActions([`fetch_${store_prefix}s`]),
         ...mapMutations([
             `set_${store_prefix}_paginate`,
