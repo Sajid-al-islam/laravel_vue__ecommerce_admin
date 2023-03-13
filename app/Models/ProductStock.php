@@ -9,6 +9,8 @@ class ProductStock extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function supplier() {
         return $this->hasOne(Supplier::class, 'id');
     }

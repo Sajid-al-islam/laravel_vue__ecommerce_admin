@@ -5,7 +5,7 @@
                 <h4>Details</h4>
                 <div class="btns">
                     <a href="" @click.prevent="$router.push({ name: 'EmailOrder', params:{id: $route.params.id} })"  class="btn rounded-pill btn-outline-success me-2">
-                        
+
                         <i class="fa fa-envelope me-5px"></i>
                         <span >
                             Email invoice
@@ -13,7 +13,7 @@
                     </a>
 
                     <a href="" @click.prevent="call_store(`print_${store_prefix}_details`, null)"  class="btn rounded-pill btn-outline-success me-2">
-                        
+
                         <i class="fa fa-print me-5px"></i>
                         <span >
                             Print
@@ -27,7 +27,7 @@
                         </span>
                     </a>
 
-                    
+
                 </div>
             </div>
             <div class="card-body pb-5" v-if="this[`get_${store_prefix}`]" id="print_section">
@@ -62,7 +62,7 @@
                                         <th class="right">Total</th>
                                     </tr>
                                 </thead>
-                                <tbody> 
+                                <tbody>
                                     <!-- <span v-if="this[`get_${store_prefix}`]">
                                         {{ this[`get_${store_prefix}`].order_details }}
                                     </span> -->
@@ -75,8 +75,8 @@
                                         <td class="center">{{ order_detail.qty }}</td>
                                         <td class="right">{{ order_detail.product_price * order_detail.qty }}</td>
                                     </tr>
-                                    
-                                    
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -118,11 +118,11 @@
                             <form class="status_change_form" action="javascript:void(0)" @submit.prevent="call_store(`set_${store_prefix}_status_update`, null)">
                                 <div class="mb-2">
                                     <label for="order_status_change" class="form-label">Change Status</label>
-                                    
+
                                     <select id="order_status_change" v-model="this[`get_${store_prefix}`].order_status" class="form-select" name="order_status">
                                         <option value="pending">Pending</option>
-                                        <option value="processing">Processing</option>
                                         <option value="accepted">Accepted</option>
+                                        <option value="processing">Processing</option>
                                         <option value="delivered">Delivered</option>
                                         <option value="canceled">Canceled</option>
                                     </select>
@@ -157,14 +157,14 @@ export default {
     },
     created: function () {
         this[`fetch_${store_prefix}`]({id: this.$route.params.id, select_all:1})
-        
+
         // setTimeout(() => {
         //     document.querySelector("section").style.background = "transparent"
         //     // if(this[`get_${store_prefix}`].description.includes("bg-white")) {
         //     //     document.querySelector("section").style.background-color = "transparent";
         //     // }
         // }, 1000);
-        
+
     },
     methods: {
         ...mapActions([

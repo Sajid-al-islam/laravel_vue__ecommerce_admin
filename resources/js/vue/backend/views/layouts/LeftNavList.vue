@@ -11,55 +11,54 @@
                 <left-nav-list-item :to="'CreateUser'" :text="'Create user'" />
             </left-nav-list-group>
 
-            <left-nav-list-group :role_permissions="['super_admin']" :icon="`fa fa-users`" :text="`Roles`" :alert_count="0">
+            <!-- <left-nav-list-group :role_permissions="['super_admin']" :icon="`fa fa-users`" :text="`Roles`" :alert_count="0">
                 <left-nav-list-item :to="'AllRole'" :text="'All roles'" />
                 <left-nav-list-item :to="'CreateRole'" :text="'Create role'" />
-            </left-nav-list-group>
-            
+            </left-nav-list-group> -->
 
             <left-nav-list-group :role_permissions="['super_admin','admin']" :icon="`fa fa-list`" :text="`Contact Message`" :alert_count="0">
                 <left-nav-list-item :to="'AllContactMessage'" :text="'All'" />
                 <left-nav-list-item :to="'CreateContactMessage'" :text="'Create'" />
             </left-nav-list-group>
-           
-            
+
+
 
             <li class="navigation-header">
                 <span data-i18n="Apps &amp; Pages">managements</span>
             </li>
 
-            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-box`" :text="`Product Management`" :alert_count="0">
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-box`" :text="`Product`" :alert_count="0">
                 <left-nav-list-item :to="'CreateProduct'" :text="'Create product'" />
                 <left-nav-list-item :to="'AllProduct'" :text="'Product Lists'" />
                 <!-- <left-nav-list-item :to="'AllProduct'" :text="'Product categories'" /> -->
             </left-nav-list-group>
 
-            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-boxes`" :text="`Product Stock Management`" :alert_count="0">
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-boxes`" :text="`Product Stock`" :alert_count="0">
                 <left-nav-list-item :to="'CreateProductStock'" :text="'Create product Stock'" />
                 <left-nav-list-item :to="'AllProductStock'" :text="'Product Stock Lists'" />
                 <!-- <left-nav-list-item :to="'AllProduct'" :text="'Product categories'" /> -->
             </left-nav-list-group>
 
-            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-shopping-cart`" :text="`Order Management`" :alert_count="0">
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-shopping-cart`" :text="`Order`" :alert_count="0">
                 <left-nav-list-item :to="'AllOrder'" :text="'Order Lists'" />
             </left-nav-list-group>
 
-            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-box`" :text="`Category Management`" :alert_count="0">
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-box`" :text="`Category`" :alert_count="0">
                 <left-nav-list-item :to="'CreateCategory'" :text="'Create category'" />
                 <left-nav-list-item :to="'AllCategory'" :text="'Category Lists'" />
             </left-nav-list-group>
 
-            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-box`" :text="`Brand Management`" :alert_count="0">
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-box`" :text="`Brand`" :alert_count="0">
                 <left-nav-list-item :to="'CreateBrand'" :text="'Create Brand'" />
                 <left-nav-list-item :to="'AllBrand'" :text="'Brand Lists'" />
             </left-nav-list-group>
 
-            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-users`" :text="`Customer Management`" :alert_count="0">
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa fa-users`" :text="`Customer`" :alert_count="0">
                 <left-nav-list-item :to="'CreateCustomer'" :text="'Create customer'" />
                 <left-nav-list-item :to="'AllCustomer'" :text="'customer Lists'" />
             </left-nav-list-group>
 
-            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa-solid fa-truck-field`" :text="`Supplier Management`" :alert_count="0">
+            <left-nav-list-group :role_permissions="['super_admin','admin','user']" :icon="`fa-solid fa-truck-field`" :text="`Supplier`" :alert_count="0">
                 <left-nav-list-item :to="'CreateSupplier'" :text="'Create Supplier'" />
                 <left-nav-list-item :to="'AllSupplier'" :text="'Supplier Lists'" />
             </left-nav-list-group>
@@ -72,8 +71,8 @@
             </left-nav-list-group>
 
 
-            
-            
+
+
 
             <li class="nav-item">
                 <a @click.prevent="fetch_logout()" class="d-flex align-items-center" href="#">

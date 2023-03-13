@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use function PHPUnit\Framework\isNull;
+
 class Product extends Model
 {
     use HasFactory;
@@ -23,10 +25,9 @@ class Product extends Model
 
     public function getRelatedCategoriesAttribute()
     {
-        if ($this->selected_categories) {
+        if (!isNull($this->selected_categories)) {
             $json_categories_id = json_decode($this->selected_categories);
             $category = [];
-            // dd($json_categories_id,$this->selected_categories);
 
             foreach ($json_categories_id as $id) {
                 if (Category::where('id', $id)->exists()) {
@@ -102,5 +103,15 @@ class Product extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class)->withTimestamps();
+    }
+
+    public function stocks()
+    {
+        return $this->hasMany(ProductStock::class,'product_id');
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(OrderDetails::class,'product_id');
     }
 }

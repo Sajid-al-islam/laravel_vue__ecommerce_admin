@@ -40,8 +40,14 @@ class OrderController extends Controller
             });
         }
 
-        $users = $query->paginate($paginate);
-        return response()->json($users);
+        $query->with([
+            'order_payments' => function($q){
+                return $q->select('payment_method','id','order_id');
+            }
+        ]);
+
+        $data = $query->paginate($paginate);
+        return response()->json($data);
     }
 
     public function show($id)
@@ -77,7 +83,7 @@ class OrderController extends Controller
         $data->save();
         $data->slug = $data->id . uniqid(5);
         $data->save();
-    
+
         return response()->json($data, 200);
     }
 
@@ -204,7 +210,7 @@ class OrderController extends Controller
     {
         $total_sales = Order::where('order_status', 'Accepted')->sum('total_price');
 
-        
+
         $total_sales_this_month = Order::where('order_status', 'Accepted')
         ->whereMonth('created_at', Carbon::now()->month)->sum('total_price');
 

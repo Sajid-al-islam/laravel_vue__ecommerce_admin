@@ -335,26 +335,29 @@ class StoreModule {
 
             /** export all data into csv */
             [`export_${store_prefix}_all`]: async function ({ state }) {
-                let col = Object.keys(state[`${store_prefix}s`].data[0]);
-                var export_csv = new window.CsvBuilder(
-                    `${store_prefix}_list.csv`
-                ).setColumns(col);
-                window.start_loader();
-                let last_page = state[`${store_prefix}s`].last_page;
-                for (let index = 1; index <= last_page; index++) {
-                    state.page = index;
-                    state.paginate = 10;
-                    await this.dispatch(`fetch_${store_prefix}s`);
-                    let values = state[`${store_prefix}s`].data.map((i) =>
-                        Object.values(i)
-                    );
-                    export_csv.addRows(values);
+                let cconfirm = await window.s_confirm("export all");
+                if (cconfirm) {
+                    let col = Object.keys(state[`${store_prefix}s`].data[0]);
+                    var export_csv = new window.CsvBuilder(
+                        `${store_prefix}_list.csv`
+                    ).setColumns(col);
+                    window.start_loader();
+                    let last_page = state[`${store_prefix}s`].last_page;
+                    for (let index = 1; index <= last_page; index++) {
+                        state.page = index;
+                        state.paginate = 10;
+                        await this.dispatch(`fetch_${store_prefix}s`);
+                        let values = state[`${store_prefix}s`].data.map((i) =>
+                            Object.values(i)
+                        );
+                        export_csv.addRows(values);
 
-                    let progress = Math.round((100 * index) / last_page);
-                    window.update_loader(progress);
+                        let progress = Math.round((100 * index) / last_page);
+                        window.update_loader(progress);
+                    }
+                    await export_csv.exportFile();
+                    window.remove_loader();
                 }
-                await export_csv.exportFile();
-                window.remove_loader();
             },
 
             /** export selected data into csv */

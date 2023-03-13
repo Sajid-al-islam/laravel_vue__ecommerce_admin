@@ -1,18 +1,16 @@
 @import "./variables";
 
 .watch {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     background-color: $purple;
     padding: 5px;
     border-radius: 2px;
     font-family: clock;
-    font-size: 18px;
+    font-size: 14px;
     color: $deep_dark;
     position: fixed;
     bottom: 5px;
-    width: calc(100% - 10px);
+    width: calc(100% - 20px);
     left: 50%;
     transform: translateX(-50%);
 

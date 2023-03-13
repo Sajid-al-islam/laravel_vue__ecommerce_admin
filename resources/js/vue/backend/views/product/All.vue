@@ -1,7 +1,7 @@
 <template>
     <div class="conatiner">
         <div class="card list_card">
-                
+
             <div class="card-header">
                 <h4>
                     All
@@ -72,8 +72,13 @@
                         <tr>
                             <th><input @click="call_store(`set_select_all_${store_prefix}s`)" type="checkbox" class="form-check-input check_all"></th>
                             <table-th :sort="true" :tkey="'id'" :title="'ID'" :ariaLable="'id'"/>
+                            <table-th :title="'Image'"/>
                             <table-th :sort="true" :tkey="'product_name'" :title="'Name'" />
                             <table-th :sort="true" :tkey="'default_price'" :title="'Price'" />
+                            <table-th :tkey="'stock'" :title="'Total Stock'" />
+                            <table-th :tkey="'sold'" :title="'Total Sold'" />
+                            <table-th :tkey="'stock'" :title="'Curent Stock'" />
+                            <table-th :tkey="'track_inventory_on_the_variant_level_low_stock'" :title="'Low Stock'" />
                             <table-th :sort="true" :tkey="'status'" :title="'Status'" />
                             <th aria-label="actions">Actions</th>
                         </tr>
@@ -84,13 +89,24 @@
                                 <input v-if="check_if_data_is_selected(item)" :data-id="item.id" checked @change="call_store(`set_selected_${store_prefix}s`,item)" type="checkbox" class="form-check-input">
                                 <input v-else @change="call_store(`set_selected_${store_prefix}s`,item)" type="checkbox" class="form-check-input">
                             </td>
-                            <td>{{ item.id }}</td>
+                            <td>
+                                <span :class="item.stocks_sum_qty - item.sales_sum_qty <= item.track_inventory_on_the_variant_level_low_stock?'badge text-light bg-danger':''">
+                                    {{ item.id }}
+                                </span>
+                            </td>
+                            <td>
+                                <img :src="`/${item.related_images[0].image}`" style="width: 40px;" alt="">
+                            </td>
                             <td>
                                 <span class="text-warning cursor_pointer" @click.prevent="call_store(`set_${store_prefix}`,item)">
                                     {{ item.product_name }}
                                 </span>
                             </td>
                             <td>{{ item.default_price }}</td>
+                            <td>{{ item.stocks_sum_qty }}</td>
+                            <td>{{ item.sales_sum_qty }}</td>
+                            <td>{{ item.stocks_sum_qty - item.sales_sum_qty }}</td>
+                            <td>{{ item.track_inventory_on_the_variant_level_low_stock }}</td>
                             <td>
                                 <span v-if="item.status == 1" class="badge bg-label-success me-1">active</span>
                                 <span v-if="item.status == 0" class="badge bg-label-success me-1">deactive</span>

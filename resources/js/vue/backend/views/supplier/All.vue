@@ -190,7 +190,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import PermissionButton from '../components/PermissionButton.vue';
-import TableTh from './components/TableTh.vue';
+import TableTh from './components/TableTh';
 import DetailsCanvas from './DetailsCanvas.vue';
 import SelectedCanvas from './SelectedCanvas.vue';
 

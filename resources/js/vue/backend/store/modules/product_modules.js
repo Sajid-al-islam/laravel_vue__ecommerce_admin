@@ -6,11 +6,15 @@ const {store_prefix, api_prefix, route_prefix} = test_module;
 // state list
 const state = {
     ...test_module.states(),
+    [`${store_prefix}_specification`]: null,
+    [`${store_prefix}_description`]: null,
 };
 
 // get state
 const getters = {
     ...test_module.getters(),
+    [`get_${store_prefix}_specification`]: (state)=> state[`${store_prefix}_specification`],
+    [`get_${store_prefix}_description`]: (state)=> state[`${store_prefix}_description`],
 };
 
 // actions
@@ -29,12 +33,11 @@ const actions = {
                 img_string +=`<img src="/${el.image}"/>`
             }
             setTimeout(() => {
-                
                 document.querySelector('.file_preview')&&
                 (document.querySelector('.file_preview').innerHTML = img_string)
             }, 1000);
-            console.log(img_string); 
-            res.data.related_categories.forEach((i) => {
+
+            res.data.categories?.forEach((i) => {
                 commit(`set_selected_categorys`, i);
             })
         });
@@ -49,6 +52,8 @@ const actions = {
             form_data.append('selected_categories[]',i.id);
         });
         // console.log(form_data);
+        form_data.append("specification", state[`${store_prefix}_specification`]);
+        form_data.append("description", state[`${store_prefix}_description`]);
         axios.post(`/${api_prefix}/store`,form_data)
             .then(res=>{
                 window.s_alert(`new ${store_prefix} has been created`);
@@ -62,7 +67,6 @@ const actions = {
             })
     },
 
-
     [`update_${store_prefix}`]: function ({ state, getters, commit }, event) {
         const {form_values, form_inputs, form_data} = window.get_form_data(`.update_form`);
         const {get_category_selected: category} = getters;
@@ -71,6 +75,9 @@ const actions = {
             form_data.append('selected_categories[]',i.id);
         });
         form_data.append("id", state[store_prefix].id);
+        form_data.append("specification", state[`${store_prefix}_specification`]);
+        form_data.append("description", state[`${store_prefix}_description`]);
+
         axios.post(`/${api_prefix}/update`, form_data).then((res) => {
             /** reset loaded user_role after data update */
             // this.commit(`set_${store_prefix}`, null);
@@ -80,10 +87,15 @@ const actions = {
 }
 
 // mutators
-console.log(test_module.mutations());
+// console.log(test_module.mutations());
 const mutations = {
     ...test_module.mutations(),
-
+    [`set_${store_prefix}_specification`]: function(state, data){
+        state[`${store_prefix}_specification`] = data;
+    },
+    [`set_${store_prefix}_description`]: function(state, data){
+        state[`${store_prefix}_description`] = data;
+    },
 };
 
 

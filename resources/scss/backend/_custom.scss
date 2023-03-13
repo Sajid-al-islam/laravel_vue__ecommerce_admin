@@ -11,6 +11,20 @@
     background-color: rgba(67, 89, 113, .3);
 }
 
+.product_details_backend div,
+.product_details_backend span,
+.product_details_backend table,
+.product_details_backend h1,
+.product_details_backend h2,
+.product_details_backend h3,
+.product_details_backend section,
+.product_details_backend p {
+    background: transparent!important;
+    background-color: transparent!important;
+    color: white!important;
+    margin-bottom: 15px!important;
+}
+
 .vertical-layout.vertical-menu-modern .main-menu .navigation li {
     position: relative;
 
@@ -349,7 +363,7 @@
     box-shadow: 0 0 10px 1px rgba(115, 103, 240, .7);
 }
 
-.dark-layout .header-navbar{
+.dark-layout .header-navbar {
     margin-top: 10px;
 }
 
@@ -362,35 +376,37 @@
     margin-right: 5px;
 }
 
-.cursor_pointer{
+.cursor_pointer {
     cursor: pointer;
 }
-.cursor_n_resize{
+
+.cursor_n_resize {
     cursor: n-resize;
 }
 
-.card-header{
-    .table_actions{
-        ul{
+.card-header {
+    .table_actions {
+        ul {
             min-width: 215px;
         }
-        &:hover{
-            ul{
+
+        &:hover {
+            ul {
                 transform: translate(0%, -12%) scale(1);
             }
         }
     }
 }
 
-.product_details_backend section{
+.product_details_backend section {
     background-color: transparent !important;
 }
 
-.table-hover tbody tr{
+.table-hover tbody tr {
     cursor: default;
 }
 
-.swal2-container{
+.swal2-container {
     z-index: 99999;
 }
 
@@ -407,64 +423,83 @@
         padding: 20px;
         margin-top: 40px;
     }
+
     .container {
         margin: 0px !important;
         padding: 0px !important;
     }
+
     .upload_demo_form {
         display: none !important;
     }
+
     .dark-layout {
         background-color: transparent !important;
     }
+
     .no_print {
         display: none !important;
     }
+
     h3 {
         display: none !important;
     }
+
     .content.app-content {
         margin: 0px !important;
         padding: 0px !important;
     }
+
     .container {
         margin: 0px !important;
         padding: 0px !important;
     }
+
     .dark-layout .table.table-striped tbody tr:nth-of-type(odd) {
         --bs-table-accent-bg: transparent !important;
     }
+
     .dark-layout .table.table-striped tbody tr:nth-of-type(even) {
         --bs-table-accent-bg: transparent !important;
     }
+
     .main-menu {
         display: none !important;
     }
+
     nav {
         display: none !important;
     }
+
     .watch {
         display: none !important;
     }
+
     .quote_img {
         display: none !important;
     }
+
     .signature_div {
         display: flex !important;
     }
+
     .price_change_history {
         display: none !important;
     }
+
     .spec {
         margin-top: 10px !important;
         margin-bottom: 10px !important;
     }
+
     .divider {
         margin: 0px !important;
     }
+
     .card-body {
         padding-top: 10px !important;
     }
+
     .signature_single_form {
         margin-top: 30px !important;
     }

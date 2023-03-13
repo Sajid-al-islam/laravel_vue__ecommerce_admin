@@ -3,7 +3,7 @@
     <div  class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
         <main-menu-navbar-top></main-menu-navbar-top>
         <div class="shadow-bottom"></div>
-        <div class="main-menu-content">
+        <div class="main-menu-content custom_scroll">
             <left-nav-list></left-nav-list>
         </div>
     </div>

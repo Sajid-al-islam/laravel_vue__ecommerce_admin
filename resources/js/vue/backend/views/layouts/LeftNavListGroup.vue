@@ -22,6 +22,7 @@ export default{
     },
     methods: {
         toggleLi: function(e){
+            [...document.querySelectorAll('.nav-item.has-sub')].forEach(el=>(!el.classList.contains('contains')) && el.classList.remove('open'))
             e.currentTarget.parentNode.classList.toggle('open');
         },
     },

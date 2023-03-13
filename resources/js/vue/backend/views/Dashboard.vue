@@ -1,5 +1,5 @@
 <template>
-    <section class="p-5">
+    <section class="p-5 custom_scroll" style="height: calc(100vh - 90px);overflow: auto;">
         <div class="row">
             <div class="col-xl-12 mb-4 col-lg-12 col-12">
                 <div class="card h-100">
@@ -105,7 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                         </div>
                     </div>
@@ -170,11 +170,11 @@ export default {
         labels: [ 'January', 'February', 'March' ],
         datasets: [ {
                 data: [40, 20, 12],
-                backgroundColor: '#695fd7', 
+                backgroundColor: '#695fd7',
                 label: 'Monthly sales',
             } ]
       },
-      
+
       LinechartData: {
         labels: [
           'January',
@@ -206,7 +206,7 @@ export default {
   methods: {
         ...mapActions(['fetch_dashboard_stats']),
     },
-    
+
     created: async function() {
         await this.fetch_dashboard_stats();
     },

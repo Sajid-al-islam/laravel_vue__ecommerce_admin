@@ -32,21 +32,27 @@ Route::group( ['prefix'=>'','namespace' => "Controllers" ],function(){
     Route::get('/invoice/{invoice}', 'WebsiteController@invoice_download')->name('invoice');
 });
 
+Route::get('/t', function () {
+    // return view('test');
+    ini_set('max_execution_time', '0');
+    foreach (\App\Models\Product::get() as $item) {
+        // \App\Models\ProductStock::insert([
+        //     'product_id' => $item->id,
+        //     'purchase_date' => $item->created_at,
+        //     'qty' => $item->track_inventory_on_the_variant_level_stock,
+        // ]);
+        // \App\Models\ProductStockLog::insert([
+        //     'product_id' => $item->id,
+        //     'qty' => $item->track_inventory_on_the_variant_level_stock,
+        //     'type' => 'initial',
+        //     'creator' => auth()->user()->id,
+        // ]);
+    }
+});
+
 Route::get('/admin', function () {
     return view('backend.dashboard');
 })->name('admin');
-
-
-
-Route::get('/test', function () {
-    // return view('test');
-    // dd(request()->getClientIp());
-    $user = \App\Models\User::find(1);
-    dd(
-        $user->roles()->get()->toArray(),
-        $user->permissions()->get()->toArray(),
-    );
-});
 
 Route::get('/data-reload', function () {
     \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--seed' => true]);

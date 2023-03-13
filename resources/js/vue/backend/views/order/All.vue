@@ -1,7 +1,7 @@
 <template>
     <div class="conatiner">
         <div class="card list_card">
-                
+
             <div class="card-header">
                 <h4>
                     All
@@ -73,6 +73,8 @@
                             <th><input @click="call_store(`set_select_all_${store_prefix}s`)" type="checkbox" class="form-check-input check_all"></th>
                             <table-th :sort="true" :tkey="'id'" :title="'ID'" :ariaLable="'id'"/>
                             <table-th :sort="true" :tkey="'invoice_id'" :title="'Invoice No'" />
+                            <table-th :sort="true" :tkey="'payment_status'" :title="'Payment Status'" />
+                            <table-th :sort="true" :tkey="'payment_status'" :title="'Payment method'" />
                             <table-th :sort="true" :tkey="'order_status'" :title="'Order Status'" />
                             <table-th :sort="true" :tkey="'delivery_method'" :title="'Delivery method'" />
                             <table-th :sort="true" :tkey="'total_price'" :title="'Price'" />
@@ -92,11 +94,13 @@
                                     {{ item.invoice_id }}
                                 </span>
                             </td>
+                            <td>{{ item.payment_status }}</td>
+                            <td>{{ item.order_payments && item.order_payments.payment_method }}</td>
                             <td>{{ item.order_status }}</td>
                             <td>{{ item.delivery_method }}</td>
                             <td>{{ item.total_price }}</td>
                             <td>{{ item.invoice_date }}</td>
-                            
+
                             <!-- <td>
                                 <span v-if="item.status == 1" class="badge bg-label-success me-1">active</span>
                                 <span v-if="item.status == 0" class="badge bg-label-success me-1">deactive</span>

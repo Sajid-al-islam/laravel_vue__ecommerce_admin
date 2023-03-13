@@ -20,7 +20,7 @@ const actions = {
 }
 
 // mutators
-console.log(test_module.mutations());
+// console.log(test_module.mutations());
 const mutations = {
     ...test_module.mutations(),
 

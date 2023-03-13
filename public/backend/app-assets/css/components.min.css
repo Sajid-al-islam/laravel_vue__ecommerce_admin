@@ -1058,7 +1058,8 @@ footer.footer-border {
 
 .main-menu .main-menu-content {
     height: calc(100% - 4.45rem) !important;
-    position: relative
+    position: relative;
+    overflow: auto;
 }
 
 .main-menu .main-menu-content .ps__rail-y {

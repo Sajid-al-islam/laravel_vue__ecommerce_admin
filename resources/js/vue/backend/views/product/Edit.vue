@@ -15,7 +15,7 @@
             <form @submit.prevent="call_store(`update_${store_prefix}`,$event.target)" autocomplete="false" class="update_form">
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        <div class="col-lg-10">
+                        <div class="col-lg-12">
                             <div class="admin_form form_1" v-if="this[`get_${store_prefix}`]">
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
@@ -40,7 +40,7 @@
                                         <CategoryManagementModal/>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`search keywords`"
@@ -76,15 +76,19 @@
                                         :type="`number`"
                                     />
                                 </div>
-                                
-                                <div class="form-group d-grid align-content-start gap-1 mb-2 " >
+
+                                <div class="form-group d-grid align-content-start full_width gap-1 mb-2 " >
+                                    <label for="specification">Specification</label>
+                                    <div id="specification"></div>
+                                    <!-- <textarea class="form-control" id="specification" name="specification" :value="this[`get_${store_prefix}`]['description']"></textarea> -->
+                                </div>
+                                <div class="form-group d-grid align-content-start full_width gap-1 mb-2 " >
                                     <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description">
-                                        {{ this[`get_${store_prefix}`]['description'] }}
-                                    </textarea>
+                                    <div id="description"></div>
+                                    <!-- <textarea class="form-control" id="description" name="description" :value="this[`get_${store_prefix}`]['description']"></textarea> -->
                                 </div>
                                 <div class="seo_section full_width mt-5">
-                                    
+
                                     <div class="heading mb-4">
                                         <h4 class="d-flex justify-content-center">Seo section</h4>
                                         <h6 class="d-flex justify-content-center">Boost traffic to your online business.</h6>
@@ -149,6 +153,14 @@ export default {
     created: function () {
         this[`fetch_${store_prefix}`]({id: this.$route.params.id});
     },
+    watch: {
+        [`get_${store_prefix}`]: {
+            handler: function(){
+                this.initEditor()
+            },
+            deep: true,
+        }
+    },
     methods: {
         ...mapActions([
             `update_${store_prefix}`,
@@ -156,10 +168,41 @@ export default {
         ]),
         ...mapMutations([
             `set_${store_prefix}`,
+            `set_${store_prefix}_description`,
+            `set_${store_prefix}_specification`,
         ]),
         call_store: function(name, params=null){
             this[name](params)
         },
+        initEditor: function(){
+            let that = this;
+
+            setTimeout(async function() {
+                let description = window.editor = await CKEDITOR.ClassicEditor
+                    .create( document.querySelector( '#description' ), window.ck_editor_config)
+                    .catch( error => {
+                        console.error( error );
+                    } );
+                description.data.set(that[`get_${store_prefix}`]['description'])
+
+                let specification = await CKEDITOR.ClassicEditor
+                    .create( document.querySelector( '#specification' ), window.ck_editor_config )
+                    .catch( error => {
+                        console.error( error );
+                    } );
+                specification.data.set(that[`get_${store_prefix}`]['specification'])
+
+                that[`set_${store_prefix}_description`](description.data.get());
+                that[`set_${store_prefix}_specification`](specification.data.get());
+
+                description.model.document.on('change', function(){
+                    that[`set_${store_prefix}_description`](description.data.get());
+                });
+                specification.model.document.on('change', function(){
+                    that[`set_${store_prefix}_specification`](specification.data.get());
+                });
+            }, 300);
+        }
     },
     computed: {
         ...mapGetters([`get_${store_prefix}`])

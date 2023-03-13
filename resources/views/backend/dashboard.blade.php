@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="/css/tailwind/tailwind.css">
     <link rel="stylesheet" href="/css/backend.css">
     <script src="/js/vue/dashboard.js" defer></script>
+    <script src="{{ asset('backend') }}/plugins/ckeditor/ckeditor.js"></script>
 
     <script>
         const Toast = Swal.mixin({

@@ -13,7 +13,7 @@
             <form @submit.prevent="call_store(`store_${store_prefix}`,$event.target)" autocomplete="false" class="create_form">
                 <div class="card-body">
                     <div class="row justify-content-center">
-                        <div class="col-lg-10">
+                        <div class="col-lg-12">
                             <div class="admin_form form_1">
                                 <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
@@ -28,7 +28,7 @@
                                         :name="`search_keywords`"
                                     />
                                 </div>
-                                
+
                                 <div class="form-group d-grid align-content-start gap-1 mb-2 " >
                                     <input-field
                                         :label="`Default price`"
@@ -44,7 +44,7 @@
                                         <CategoryManagementModal/>
                                     </div>
                                 </div>
-                                
+
                                 <!-- <div class=" form-group d-grid align-content-start gap-1 mb-2 " >
                                     <label for="category_id">Category</label>
                                     <select name="category_id" id="category_id" class="form-control">
@@ -82,14 +82,20 @@
                                     />
                                 </div>
 
-                                
-
-                                <div class="form-group d-grid align-content-start gap-1 mb-2 " >
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" name="description"></textarea>
+                                <div class="form-group d-grid align-content-start full_width gap-1 mb-2 " >
+                                    <label for="specification">Specification</label>
+                                    <div id="specification"></div>
+                                    <!-- <textarea class="form-control" id="specification" name="specification" :value="this[`get_${store_prefix}`]['description']"></textarea> -->
                                 </div>
+
+                                <div class="form-group d-grid align-content-start full_width gap-1 mb-2 " >
+                                    <label for="description">Description</label>
+                                    <div id="description"></div>
+                                    <!-- <textarea class="form-control" id="description" name="description" :value="this[`get_${store_prefix}`]['description']"></textarea> -->
+                                </div>
+
                                 <div class="seo_section full_width mt-5">
-                                    
+
                                     <div class="heading mb-4">
                                         <h4 class="d-flex justify-content-center">Seo section</h4>
                                         <h6 class="d-flex justify-content-center">Boost traffic to your online business.</h6>
@@ -116,7 +122,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                         </div>
@@ -130,12 +136,11 @@
                 </div>
             </form>
         </div>
-        
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import InputField from '../components/InputField.vue'
 /** store and route prefix for export object use */
 import PageSetup from './PageSetup';
@@ -151,12 +156,42 @@ export default {
             route_prefix
         }
     },
-    created: function () {},
+    created: function () {
+        this.initEditor();
+    },
     methods: {
         ...mapActions([`store_${store_prefix}`]),
+        ...mapMutations([
+            `set_${store_prefix}_description`,
+            `set_${store_prefix}_specification`,
+        ]),
         call_store: function(name, params=null){
             this[name](params)
         },
+        initEditor: function(){
+            let that = this;
+
+            setTimeout(async function() {
+                let description = window.editor = await CKEDITOR.ClassicEditor
+                    .create( document.querySelector( '#description' ), window.ck_editor_config)
+                    .catch( error => {
+                        console.error( error );
+                    } );
+
+                let specification = await CKEDITOR.ClassicEditor
+                    .create( document.querySelector( '#specification' ), window.ck_editor_config )
+                    .catch( error => {
+                        console.error( error );
+                    } );
+
+                description.model.document.on('change', function(){
+                    that[`set_${store_prefix}_description`](description.data.get());
+                });
+                specification.model.document.on('change', function(){
+                    that[`set_${store_prefix}_specification`](specification.data.get());
+                });
+            }, 300);
+        }
     },
 };
 </script>
